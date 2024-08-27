@@ -1,0 +1,8 @@
+PyQt6
+opencv-python
+paho-mqtt
+psutil
+colorlog
+ultralytics
+django
+pupil_labs.realtime_api
