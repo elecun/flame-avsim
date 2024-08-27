@@ -80,9 +80,10 @@ class AppWindow(QMainWindow):
                 self.runner.scenario_stop_slot.connect(self.end_scenario_process)
 
                 # eyetracker device discovery
+                self.__eyetracker = None
                 if config["use_eyetracker"]:
                     self.__console.info("Discovering eyetracker...")
-                    self.__eyetracker = neon_controller(5)
+                    self.__eyetracker = neon_controller(5, config)
                     self.__eyetracker.status_update_signal.connect(self.on_eyetracker_status_update)
                     self.__eyetracker.start()
 
@@ -94,7 +95,7 @@ class AppWindow(QMainWindow):
     def closeEvent(self, event:QCloseEvent) -> None: 
         self.__console.info("Window is now terminated")
 
-        if self.config["use_eyetracker"]:
+        if self.config["use_eyetracker"] and self.__eyetracker:
             if self.__eyetracker.is_working():
                 self.__eyetracker.stop()
                 self.__eyetracker.wait()

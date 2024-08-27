@@ -8,6 +8,8 @@ from pupil_labs.realtime_api import device
 from util.logger.console import ConsoleLogger
 import asyncio
 import time
+import paho.mqtt.client as mqtt
+import json
 
 try:
     from PyQt5.QtCore import QObject, Qt, QTimer, QThread, pyqtSignal
@@ -20,13 +22,27 @@ class neon_controller(QThread):
 
     status_update_signal = pyqtSignal(dict)
 
-    def __init__(self, interval):
+    def __init__(self, interval, config):
         super().__init__()
+        self.__console = ConsoleLogger.get_logger()
+
         self.device = asyncio.run(self.device_discover())
         self.__is_running = True
         self.__interval = interval
 
-        self.__console = ConsoleLogger.get_logger()
+        # message api definitions
+        self.message_api = {
+            "flame/avsim/neon/mapi_record_start" : self.mapi_record_start,
+            "flame/avsim/neon/mapi_record_stop" : self.mapi_record_stop
+        }
+
+        # MQTT-based message api pipeline
+        self.mq_client = mqtt.Client(client_id="neon_controller", transport='tcp', protocol=mqtt.MQTTv311, clean_session=True)
+        self.mq_client.on_connect = self.on_mqtt_connect
+        self.mq_client.on_message = self.on_mqtt_message
+        self.mq_client.on_disconnect = self.on_mqtt_disconnect
+        self.mq_client.connect_async(config["broker_ip"], port=1883, keepalive=60)
+        self.mq_client.loop_start()
 
     # thread loop function
     def run(self):
@@ -50,7 +66,7 @@ class neon_controller(QThread):
 
     # device discover
     async def device_discover(self):
-        return discover_one_device(max_search_duration_seconds=5)
+        return await discover_one_device(max_search_duration_seconds=5)
     
     # get device info
     def device_info(self) -> dict:
@@ -72,6 +88,14 @@ class neon_controller(QThread):
                 self.device.close()
         except RuntimeError as e:
             self.__console.critical(f"Eyetracker Exception : {e}")
+
+    # message api for record start
+    def mapi_record_start(self, payload):
+        self.record_start()
+    
+    # message api for record stop
+    def mapi_record_stop(self, payload):
+        self.record_stop()  
     
     # recording start
     def record_start(self):
@@ -89,3 +113,33 @@ class neon_controller(QThread):
                 ret = self.device.recording_stop_and_save()
             except device.DeviceError as e:
                 self.__console.critical(f"Eyetracker Exception : {e}")
+
+    # mqtt connection
+    def on_mqtt_connect(self, mqttc, obj, flags, rc):
+        # subscribe message api
+        for topic in self.message_api.keys():
+            self.mq_client.subscribe(topic, 0)
+        
+        self.__console(f"[Eyetracker] Ready to MAPI ({rc})")
+        
+    def on_mqtt_disconnect(self, mqttc, userdata, rc):
+        self.__console(f"[Eyetracker] MAPI is not available")
+
+    # message parser with MQTT
+    def on_mqtt_message(self, mqttc, userdata, msg):
+        mapi = str(msg.topic)
+        
+        try:
+            if mapi in self.message_api.keys():
+                payload = json.loads(msg.payload)
+                if "app" not in payload:
+                    self.__console.info(f"[Eyetracker] Message payload does not contain the app")
+                    return
+                
+                if payload["app"] != "avsim_monitor":
+                    self.message_api[mapi](payload)
+            else:
+                self.__console.info(f"[Eyetracker] Unknown MAPI {mapi}")
+
+        except json.JSONDecodeError as e:
+            print("MAPI Message payload cannot be converted")
