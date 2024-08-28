@@ -13,13 +13,13 @@ import paho.mqtt.client as mqtt
 try:
     # using PyQt5
     from PyQt5.QtGui import QImage, QPixmap, QCloseEvent
-    from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QMessageBox, QProgressBar, QFileDialog
+    from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QMessageBox, QProgressBar, QFileDialog, QLineEdit
     from PyQt5.uic import loadUi
     from PyQt5.QtCore import QObject, Qt, QTimer, QThread, pyqtSignal
 except ImportError:
     # using PyQt6
     from PyQt6.QtGui import QImage, QPixmap, QCloseEvent, QStandardItem, QStandardItemModel, QIcon, QColor
-    from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QMessageBox, QProgressBar, QFileDialog
+    from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QMessageBox, QProgressBar, QFileDialog, QLineEdit
     from PyQt6.uic import loadUi
     from PyQt6.QtCore import QModelIndex, QObject, Qt, QTimer, QThread, pyqtSignal
 
@@ -52,7 +52,8 @@ class AppWindow(QMainWindow):
                 self.btn_scenario_start.clicked.connect(self.on_scenario_start)
                 self.btn_scenario_stop.clicked.connect(self.on_scenario_stop)
                 self.btn_new_subject.clicked.connect(self.on_new_subject)
-                self.btn_camera_connect_all.clicked.connect(self.on_camera_connect_all)
+                self.actionConnect_All.triggered.connect(self.on_camera_connect_all)
+                self.actionOpen_operating_scenario.triggered.connect(self.on_scenario_open)
 
                 # map between camera device and windows
                 self.__frame_window_map = {}
@@ -201,7 +202,9 @@ class AppWindow(QMainWindow):
     enroll new subject button click event callback
     '''
     def on_new_subject(self):
-        pass
+        subject_name = self.findChild(QLineEdit, name="edit_subject_name").text()
+        target_path = pathlib.Path(self.config["root_path"])/pathlib.Path(self.config["save_path"])/pathlib.Path(subject_name)
+        os.makedirs(target_path, exist_ok=True)
 
     '''
     camera connection button click event callback
