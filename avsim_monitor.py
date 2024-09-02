@@ -41,8 +41,8 @@ if __name__ == "__main__":
             configure["root_path"] = ROOT_PATH
             configure["app_path"] = ROOT_PATH / "avsim_monitor"
 
-            console.info(f"* ROOT Path : {configure["root_path"]}")
-            console.info(f"* App Path : {configure["app_path"]}")
+            console.info(f"* ROOT Path : {configure['root_path']}")
+            console.info(f"* App Path : {configure['app_path']}")
 
 
             app = QApplication(sys.argv)
