@@ -423,32 +423,6 @@ color: rgb(255,255,255);</string>
       <bool>true</bool>
      </attribute>
     </widget>
-    <widget class="QCheckBox" name="chk_fade_out">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>131</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Apply Fade Out</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="chk_fade_in">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>131</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Apply Fade In</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="btn_sound_stop">
      <property name="geometry">
       <rect>
