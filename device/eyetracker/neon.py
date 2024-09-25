@@ -18,17 +18,82 @@ except ImportError:
     from PyQt6.QtCore import QObject, Qt, QTimer, QThread, pyqtSignal
     from PyQt6.QtGui import QImage
 
-class neon_controller(QThread):
+class neon_controller(QObject):
+    status_update_signal = pyqtSignal(dict)
+
+    def __init__(self, config):
+        super().__init__()
+        self.__console = ConsoleLogger.get_logger()
+
+    def __delattr__(self, __name: str) -> None:
+        print("closing..")
+        #self.close() # device close
+
+    # device discover
+    def device_discover(self):
+        self.__console.info("Discover eyetracker device...")
+        self.device = discover_one_device(max_search_duration_seconds=5)
+        self.status_update_signal.emit(self.device_info())
+    
+    # device close
+    def close(self):
+        try:
+            if self.device:
+                self.device.close()
+                print("Neon device is closed")
+        except RuntimeError as e:
+            print(f"Runtime Error : {e}")
+
+        # recording start
+    def record_start(self):
+        if self.device:
+            try:
+                record_id = self.device.recording_start()
+                print("start recording")
+                print(record_id)
+            except device.DeviceError as e:
+                print(f"Device Error : {e}")
+
+    # recording stop
+    def record_stop(self):
+        if self.device:
+            try:
+                ret = self.device.recording_stop_and_save()
+                print("stop recording")
+                print(ret)
+            except device.DeviceError as e:
+                print(f"Device Error : {e}")
+
+    # get device info
+    def device_info(self) -> dict:
+        info = {}
+        if self.device:
+            info["address"] = self.device.address
+            info["name"] = self.device.phone_name
+            info["battery_level"] = self.device.battery_level_percent
+            info["battery_state"] = self.device.battery_state
+            info["free_storage"] = self.device.memory_num_free_bytes/1024**3
+            info["memory_state"] = self.device.memory_state
+        return info
+    
+
+
+
+
+
+
+
+class neon_controller2(QThread):
 
     status_update_signal = pyqtSignal(dict)
 
-    def __init__(self, interval, config):
+    def __init__(self, config):
         super().__init__()
         self.__console = ConsoleLogger.get_logger()
 
         self.device = asyncio.run(self.device_discover())
         self.__is_running = True
-        self.__interval = interval
+        self.__interval = 10 # update info interval
 
         # message api definitions
         self.message_api = {
@@ -66,7 +131,7 @@ class neon_controller(QThread):
 
     # device discover
     async def device_discover(self):
-        return await discover_one_device(max_search_duration_seconds=5)
+        return discover_one_device(max_search_duration_seconds=5)
     
     # get device info
     def device_info(self) -> dict:

@@ -10,8 +10,9 @@ from datetime import datetime
 from util.logger.video import VideoRecorder
 import platform
 from util.logger.console import ConsoleLogger
-from vision.camera.interface import ICamera
+from device.camera.interface import ICamera
 import numpy as np
+from typing import Tuple
 
 
 # camera device class
@@ -67,7 +68,9 @@ class UVC(ICamera):
 # camera controller class
 class Controller(QThread):
 
-    frame_update_signal = pyqtSignal(np.ndarray, float) # to gui and process
+    #frame_update_signal = pyqtSignal(np.ndarray, float) # to gui and process
+    # frame_update_signal = pyqtSignal(id, QImage, float) # camera_id, image_frame, framerate
+    frame_update_signal = pyqtSignal(int, np.ndarray, float) # camera_id, image_frame, framerate
 
     def __init__(self, camera_id:int):
         super().__init__()
@@ -90,7 +93,7 @@ class Controller(QThread):
         return False
 
     # camera pixel resolution
-    def get_pixel_resolution(self) -> (int, int):
+    def get_pixel_resolution(self) -> Tuple[int, int]:
         fps, w, h = self.__uvc_camera.get_properties()
         return (w,h)
     
@@ -130,6 +133,5 @@ class Controller(QThread):
             if ret:                
                 t_end = datetime.now()
                 framerate = float(1./(t_end - t_start).total_seconds())
-
-                self.frame_update_signal.emit(frame, framerate)
+                self.frame_update_signal.emit(self.__uvc_camera.get_camera_id(), frame, framerate)
     

@@ -6,3 +6,4 @@ colorlog
 ultralytics
 django
 pupil_labs.realtime_api
+pygame
