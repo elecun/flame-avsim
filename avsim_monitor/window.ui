@@ -398,11 +398,11 @@ color: rgb(255,255,255);</string>
       <x>1630</x>
       <y>570</y>
       <width>321</width>
-      <height>441</height>
+      <height>791</height>
      </rect>
     </property>
     <property name="title">
-     <string>Sounds</string>
+     <string>Sound Resources</string>
     </property>
     <widget class="QTableView" name="table_sound_files">
      <property name="enabled">
@@ -411,9 +411,9 @@ color: rgb(255,255,255);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>80</y>
+       <y>70</y>
        <width>301</width>
-       <height>351</height>
+       <height>711</height>
       </rect>
      </property>
      <property name="editTriggers">
@@ -429,8 +429,12 @@ color: rgb(255,255,255);</string>
        <x>250</x>
        <y>30</y>
        <width>61</width>
-       <height>41</height>
+       <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(150, 150, 150);
+color: rgb(255,255,255);</string>
      </property>
      <property name="text">
       <string>Stop</string>
