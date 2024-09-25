@@ -882,7 +882,7 @@ color: rgb(255,255,255);</string>
       <string>Record</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btn_eyetracker_stop_2">
+    <widget class="QPushButton" name="btn_camera_record_stop">
      <property name="geometry">
       <rect>
        <x>100</x>
