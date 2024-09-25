@@ -549,7 +549,7 @@ color: rgb(255,255,255);</string>
      </rect>
     </property>
     <property name="title">
-     <string>Simulation Scenario</string>
+     <string>Scenario</string>
     </property>
     <widget class="QTableView" name="table_scenario_contents">
      <property name="geometry">
@@ -695,7 +695,7 @@ color: rgb(255,255,255);</string>
      </rect>
     </property>
     <property name="title">
-     <string>Simulation Status</string>
+     <string>Data Management</string>
     </property>
     <widget class="QLabel" name="label">
      <property name="geometry">
