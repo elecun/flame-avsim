@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+{%load static %}
+<html class="no-js">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width">    
+ 
+    <!-- remove or comment this line if you want to use the local fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+ 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootmetro.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootmetro-responsive.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootmetro-icons.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootmetro-ui-light.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/datepicker.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/fontawesome-free-6.4.0-web/css/all.css'%}">
+ 
+    <!--  these two css are to use only for documentation -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/demo.css'%}">
+   
+    <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/paho-mqtt/paho-mqtt-min.js' %}"></script>
+    <script type="text/javascript">
+        let mqtt_client_id = "flame-avsim-client-"+parseInt(Math.random()*10000, 10);
+        var mqtt_client = new Paho.Client("{{system.mqtt_broker_ip}}", Number("{{system.mqtt_broker_port}}"), mqtt_client_id);
+        mqtt_client.onConnectionLost = mqtt_onConnectionLost;
+        mqtt_client.onMessageArrived = mqtt_onMessageArrived;
+        mqtt_client.connect({onSuccess:mqtt_onConnect, onFailure:mqtt_onFailure, reconnect: true, useSSL:false});
+
+        var sound_received = new Audio("{% static 'sound/received.mp3' %}");
+        function play_notify(){  sound_received.play(); console.log("sound"); }
+
+        /* MQTT Connection event callback */
+        function mqtt_onConnect(){
+            console.log("MQTT broker connected");
+            mqtt_client.subscribe("flame/avsim/cdlink/#");
+            // message = new Paho.MQTT.Message("Hello");
+            // message.destinationName = "World";
+            // client.send(message);
+        }
+
+        /* MQTT Failure event callback */
+        function mqtt_onFailure(){
+            console.log("Failed");
+        }
+
+        /* MQTT Connection lost event callback */
+        function mqtt_onConnectionLost(responseObject){
+            if(responseObject.errorCode !== 0) {
+                console.log("onConnectionLost:"+responseObject.errorMessage);
+            }
+        }
+
+         /* MQTT message arrived event callback */
+         function mqtt_onMessageArrived(message){
+            try{
+
+               const payload = JSON.parse(message.payloadString.replace(/'/g, '\"'));
+               switch(message.topic){
+                  // move to any url
+                  case "flame/avsim/cdlink/mapi_set_url":
+                     if(payload.hasOwnProperty("url")){
+                        window.location.href = "http://{{system.host}}:{{system.port}}"+payload.url;
+                     }
+               break;
+               case "cdlink/card":
+                     if(data.hasOwnProperty("code")){
+                        document.getElementById("nback_code").innerText = data.code;
+                        //document.getElementById("btn_nback_correct").style.display = "block";
+                        nback_show_card.play();
+                     }
+                  break;
+               }
+            }
+            catch(e){
+               console.log("message payload parse error");
+            }
+         }
+    </script>
+
+ </head>
+ 
+<body>
+ 
+    <div id="wrap">
+    
+       <div id="nav-bar" class="">
+          <div class="pull-left">
+             <div id="header-container">
+                <h5>AVSim Center Display Link</h5>
+                <div class="dropdown">
+                  <a class="header-dropdown dropdown-toggle accent-color" data-toggle="dropdown" href="#">
+                     Apps
+                     <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                  <li><a href="#">Visual N-Back</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Home</a></li>
+               </ul>
+            </div>
+             </div>
+          </div>
+          <div class="pull-right">
+             <div id="top-info" class="pull-right">
+             <a id="settings" href="#" class="win-command pull-right">
+                <span class="win-commandicon win-commandring icon-cog-3"></span>
+             </a>
+             <a id="logged-user" href="#" class="win-command pull-right">
+                <span class="win-commandicon win-commandring icon-user"></span>
+             </a>
+             
+          </div>
+       </div>
+       </div>
+    
+       <!--<div id="metro-container" class="-container">-->
+          <!--<div class="row">-->
+             <!--<div id="hub" class="metro">-->
+                <div class="metro panorama">
+                   <div class="panorama-sections">
+    
+    
+                      <div class="panorama-section tile-span-4">
+    
+                         <h2>Congnitive Load Task</h2>
+                        
+                         <!-- apps for avsim-->
+                         <a class="tile app bg-color-blue" href="{% url 'app_2back_visual_index'%}">
+                            <div class="image-wrapper">
+                                <img src="{% static 'img/memory.png'%}">
+                                <p><i class="fa-solid fa-star fa-2xs"></i></p>
+                            </div>
+                            <div class="app-label">Visual 2-Back Task</div>
+                         </a>
+
+                         <a class="tile app bg-color-blue" href="#">
+                           <div class="image-wrapper">
+                               <img src="{% static 'img/memory.png'%}">
+                               <p>
+                                 <i class="fa-solid fa-star fa-2xs"></i>
+                                 <i class="fa-solid fa-star fa-2xs"></i>
+                              </p>
+                           </div>
+                           <div class="app-label">Visual 3-Back Task</div>
+                        </a>
+
+                        <a class="tile app bg-color-blue" href="#">
+                           <div class="image-wrapper">
+                               <img src="{% static 'img/memory.png'%}">
+                               <p>
+                                 <i class="fa-solid fa-star fa-2xs"></i>
+                                 <i class="fa-solid fa-star fa-2xs"></i>
+                                 <i class="fa-solid fa-star fa-2xs"></i>
+                              </p>
+                           </div>
+                           <div class="app-label">Visual 4-Back Task</div>
+                        </a>
+    
+                         <a class="tile app bg-color-gray" href="#">
+                            <div class="image-wrapper">
+                                <img src="{% static 'img/nback.png'%}">
+                            </div>
+                            <div class="app-label">Auditory N-Back Task</div>
+                         </a>
+
+                         <a class="tile app bg-color-gray" href="#">
+                            <div class="image-wrapper">
+                                <img src="{% static 'img/stroop.png'%}">
+                            </div>
+                            <div class="app-label">Visual Stroop Task</div>
+                         </a>
+
+                         <a class="tile app bg-color-gray" href="#">
+                            <div class="image-wrapper">
+                                <img src="{% static 'img/stroop.png'%}">
+                            </div>
+                            <div class="app-label">Auditory Stroop Task</div>
+                         </a>
+
+                         <a class="tile app bg-color-gray" href="#" style="background-color: #000000;">
+                            <div class="image-wrapper">
+                                <img src="{% static 'img/surt.png'%}">
+                            </div>
+                            <div class="app-label">Surrogate Ref. Task</div>
+                         </a>
+
+                         <a class="tile app bg-color-gray" href="#" onclick="javascript:play_notify()">
+                            <div class="image-wrapper">
+                                <img src="{% static 'img/surt.png'%}">
+                            </div>
+                            <div class="app-label">Test</div>
+                         </a>
+
+                     </div>    
+    
+                      <div class="panorama-section tile-span-4">
+    
+                         <h2>Group two</h2>
+    
+                         <a class="tile wide imagetext bg-color-blue" href="#">
+                            <div class="image-wrapper">
+                               <span class="icon icon-music-3"></span>
+                            </div>
+                            <div class="column-text">
+                               <div class="text">Top 10</div>
+                               <div class="text">Favorites</div>
+                               <div class="text">Best choices</div>
+                            </div>
+                            <span class="app-label">MUSIC</span>
+                         </a>
+    
+                         <a class="tile wide imagetext bg-color-blueDark" href="./base-css.html">
+                            <div class="image-wrapper">
+                               <img src="#" />
+                            </div>
+                            <div class="column-text">
+                               <div class="text">Typography</div>
+                               <div class="text">Tables</div>
+                               <div class="text">Forms</div>
+                               <div class="text">Buttons</div>
+                            </div>
+                            <span class="app-label">BASE CSS</span>
+                         </a>
+    
+                         <a class="tile app bg-color-orange" href="#">
+                            <div class="image-wrapper">
+                               <img src="#" alt="" />
+                            </div>
+                            <span class="app-label">COMPONENTS</span>
+                         </a>
+    
+                         <a class="tile app bg-color-red" href="./javascript.html">
+                            <div class="image-wrapper">
+                               <img src="#" alt="" />
+                            </div>
+                            <span class="app-label">JAVASCRIPT</span>
+                         </a>
+    
+                      </div>
+    
+                   </div>
+                </div>
+                <a id="panorama-scroll-prev" href="#"></a>
+                <a id="panorama-scroll-next" href="#"></a>
+                <div id="panorama-scroll-prev-bkg"></div>
+                <div id="panorama-scroll-next-bkg"></div>
+             <!--</div>-->
+          <!--</div>-->
+       <!--</div>-->
+    
+    </div>
+ 
+    <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+    <script src="//code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script>window.jQuery || document.write("<script src='assets/js/jquery-1.10.0.min.js'>\x3C/script>")</script>
+ 
+    <!--[if IE 7]>
+    <script type="text/javascript" src="scripts/bootmetro-icons-ie7.js">
+    <![endif]-->
+    <script type="text/javascript" src="{% static 'js/min/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/bootmetro-panorama.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/bootmetro-pivot.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.mousewheel.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.touchSwipe.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'plugins/fontawesome-free-6.4.0-web/js/all.min.js'%}"></script>
+ 
+    <script type="text/javascript">
+
+        /* page loaded successfully */
+        window.addEventListener('DOMContentLoaded', function(){
+            
+        });
+ 
+       $('.panorama').panorama({
+          //nicescroll: true,
+          showscrollbuttons: true,
+          keyboard: false,
+          parallax: true
+       });
+ 
+       //$('#pivot').pivot();
+ 
+    </script>
+ </body>
+ </html>
+ 

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2-back Task with MQTT</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Paho MQTT JavaScript Client -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+    <style>
+        /* 배경을 검정색으로 설정 */
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        /* 화면 중앙에 배치 */
+        .centered-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* 버튼 두 개를 나란히 배치 */
+        .button-container {
+            display: flex;
+            gap: 20px; /* 버튼 사이 간격 */
+        }
+
+        /* 네모 모양의 버튼 */
+        .square-button {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container centered-container">
+    <div class="button-container">
+        <button id="visual-button" class="btn btn-primary square-button">Visual 2-back task</button>
+        <button id="auditory-button" class="btn btn-secondary square-button">Auditory 2-back task</button>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // MQTT 브로커에 연결하고 토픽을 구독하는 함수
+    function connectMQTT() {
+        // 클라이언트 생성 (임의의 클라이언트 ID를 생성)
+        var client = new Paho.MQTT.Client("192.168.0.30", Number(9001), "clientId_" + parseInt(Math.random() * 100, 10));
+
+        // 콜백 함수: 연결이 성공했을 때 호출
+        client.onConnectionLost = function (responseObject) {
+            if (responseObject.errorCode !== 0) {
+                console.log("onConnectionLost:" + responseObject.errorMessage);
+            }
+        };
+
+        // 콜백 함수: 메시지를 받을 때 호출
+        client.onMessageArrived = function (message) {
+            console.log("onMessageArrived: " + message.payloadString);
+        };
+
+        // 연결 옵션 설정
+        var options = {
+            onSuccess: function () {
+                console.log("Connected to MQTT broker");
+                // 연결 성공 시 토픽 구독
+                client.subscribe("flame/avsim/manager");
+                console.log("Subscribed to: flame/avsim/manager");
+            },
+            onFailure: function (message) {
+                console.log("Connection failed: " + message.errorMessage);
+            }
+        };
+
+        // 연결 시작
+        client.connect(options);
+    }
+
+    // 페이지 로드 시 MQTT 연결 시도
+    window.onload = function () {
+        connectMQTT();
+    };
+</script>
+
+</body>
+</html>

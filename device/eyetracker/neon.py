@@ -33,7 +33,14 @@ class neon_controller(QObject):
     def device_discover(self):
         self.__console.info("Discover eyetracker device...")
         self.device = discover_one_device(max_search_duration_seconds=5)
-        self.status_update_signal.emit(self.device_info())
+        if self.device:
+            self.status_update_signal.emit(self.device_info())
+        self.__console.info(f"Eyetracker device : {self.device}")
+    
+    # check device is alive
+    def is_available(self) -> bool:
+        return False if self.device is None else True
+        
     
     # device close
     def close(self):

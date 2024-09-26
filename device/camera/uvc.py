@@ -61,7 +61,7 @@ class UVC(ICamera):
         return self.__grabber.isOpened()
     
     # get camera properties
-    def get_properties(self):
+    def get_properties(self) ->Tuple[float, int, int]:
         fps = self.__grabber.get(cv2.CAP_PROP_FPS)
         w = int(self.__grabber.get(cv2.CAP_PROP_FRAME_WIDTH))
         h = int(self.__grabber.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -72,15 +72,17 @@ class Controller(QThread):
 
     frame_update_signal = pyqtSignal(int, np.ndarray, float) # camera_id, image_frame, framerate
 
-    def __init__(self, camera_id:int, config):
+    def __init__(self, camera_id:int):
         super().__init__()
         
         self.__console = ConsoleLogger.get_logger()   # console logger
         self.__uvc_camera = UVC(camera_id)    # UVC camera device
         self.__raw_video_writer = None      # camera video writer
-        self.__recording_start_trigger = False # True means starting
+        self.__recording_released = False
         self.__is_recording = False # video recording status
-        self.__config = config # configuration
+        self.__prev_timestamp = datetime.now() # previous timestamp
+        self.__timestamp_writer = None
+        self.__timestamp_file = None
     
     # get camera id from own camera device    
     def get_camera_id(self) -> int:
@@ -100,6 +102,15 @@ class Controller(QThread):
     def get_pixel_resolution(self) -> Tuple[int, int]:
         fps, w, h = self.__uvc_camera.get_properties()
         return (w,h)
+    
+    # camera framerate
+    def get_framerate(self) -> float:
+        fps, _, _ = self.__uvc_camera.get_properties()
+        return fps
+    
+    # get camera properties
+    def get_properties(self) -> Tuple[float, int, int]:
+        return self.__uvc_camera.get_properties()
     
     # camera device close
     def close(self) -> None:
@@ -131,17 +142,22 @@ class Controller(QThread):
             if self.isInterruptionRequested():
                 break
             
-            t_start = datetime.now()
+            t_current = datetime.now()
             ret, frame = self.__uvc_camera.grab()
 
             if ret:                
-                t_end = datetime.now()
-                framerate = float(1./(t_end - t_start).total_seconds())
+                # t_end = datetime.now()
+                framerate = float(1./(t_current - self.__prev_timestamp).total_seconds())
                 self.frame_update_signal.emit(self.__uvc_camera.get_camera_id(), frame, framerate)
+                self.__prev_timestamp = t_current
 
                 # record video
                 if self.__is_recording:
-                    self.raw_video_record_with_timestamp(frame, t_start)
+                    self.raw_video_record_with_timestamp(frame, t_current)
+                else:
+                    if self.__recording_released:
+                        self.release_video_writer()
+                        self.__recording_released = False
     
     def is_recording(self) -> bool:
         return self.__is_recording
@@ -152,48 +168,52 @@ class Controller(QThread):
             self.__raw_video_writer.write(frame)
 
     # video recording with timestamp(csv)
-    def raw_video_record_with_timestamp(self, frame, tstamp):
+    def raw_video_record_with_timestamp(self, frame, tstamp:datetime):
         if self.__raw_video_writer:
             self.__raw_video_writer.write(frame)
+        if self.__timestamp_writer:
+            self.__timestamp_writer.writerow([str(tstamp.timestamp())])
 
     # create new video writer to save as video file
-    def create_raw_video_writer(self):
+    def create_raw_video_writer(self, workspace):
         if self.__is_recording:
             self.release_video_writer()
+            self.__is_recording = False
 
-        record_start_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        if "target_path" in self.__config:
-            save_path = pathlib.Path(self.__config["target_path"])/pathlib.Path(self.__config["videoout_path"])
-        
-        self.data_out_path = self.DATA_OUT_DIR / record_start_datetime
-        self.data_out_path.mkdir(parents=True, exist_ok=True)
+        # define save path
+        save_path = pathlib.Path(workspace)/pathlib.Path("camera")
+        save_path.mkdir(parents=True, exist_ok=True)
 
-        camera_fps = int(self.grabber.get(cv2.CAP_PROP_FPS))
-        camera_w = int(self.grabber.get(cv2.CAP_PROP_FRAME_WIDTH))
-        camera_h = int(self.grabber.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        fourcc = cv2.VideoWriter_fourcc(*'MJPG') # low compression but bigger (file extension : avi)
+        fps, w, h = self.__uvc_camera.get_properties()
+        fourcc = cv2.VideoWriter_fourcc(*'I420') # low compression but bigger (file extension : avi) MJPG, I420
 
-        print(f"recording camera({self.camera_id}) info : ({camera_w},{camera_h}@{camera_fps})")
-        self.__raw_video_writer = cv2.VideoWriter(str(self.data_out_path/f'cam_{self.camera_id}.{VIDEO_FILE_EXT}'), fourcc, CAMERA_RECORD_FPS, (camera_w, camera_h))
-        self.processed_video_writer = cv2.VideoWriter(str(self.data_out_path/f'proc_cam_{self.camera_id}.{VIDEO_FILE_EXT}'), fourcc, CAMERA_RECORD_FPS, (camera_w, camera_h))
-        self.pose_csvfile = open(self.data_out_path / "pose.csv", mode="a+", newline='')
-        self.pose_csvfile_writer = csv.writer(self.pose_csvfile)
+        print(f"recording camera({self.__uvc_camera.get_camera_id()}) info : ({w},{h}@{fps})")
+        self.__raw_video_writer = cv2.VideoWriter((save_path/pathlib.Path(f"cam_{self.__uvc_camera.get_camera_id()}.avi")).as_posix(), fourcc, fps, (w, h))
+
+        # timestamp log to csv
+        self.__timestamp_file = open((save_path/f"timestamp_{self.__uvc_camera.get_camera_id()}.csv"), mode='w')
+        self.__timestamp_writer = csv.writer(self.__timestamp_file)
 
     # destory the video writer
     def release_video_writer(self):
+        self.__timestamp_file.flush()
+        self.__timestamp_file.close()
+
         if self.__raw_video_writer:
             self.__raw_video_writer.release()
+            self.__console.info("Recorder is completely released")
+            self.__raw_video_writer = None
+        
 
-        if self.processed_video_writer:
-            self.processed_video_writer.release()
-
-    # start video recording
-    def start_recording(self):
+    # start video recording (workspace : path to save)
+    def start_recording(self, workspace):
         if not self.__is_recording:
-            self.create_raw_video_writer()
+            self.create_raw_video_writer(workspace)
             self.__is_recording = True # working on thread
 
     # stop video recording
     def stop_recording(self):
         if self.__is_recording:
+            self.__recording_released = True
             self.__is_recording = False
+

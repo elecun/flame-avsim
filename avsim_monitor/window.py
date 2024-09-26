@@ -62,13 +62,14 @@ class AppWindow(QMainWindow):
                 self.table_sound_files.doubleClicked.connect(self.on_dbclick_sound_select) # play selected sound file
                 self.btn_camera_record.clicked.connect(self.on_camera_record_start)
                 self.btn_camera_record_stop.clicked.connect(self.on_camera_record_stop)
+                self.btn_sound_stop.clicked.connect(self.on_sound_stop)
 
                 # map between camera device and windows
                 self.__frame_window_map = {}
                 self.__camera_device_map = {}
                 for idx, id in enumerate(config["camera_ids"]):
                     self.__frame_window_map[id] = self.findChild(QLabel, config["camera_windows"][idx])
-                    self.__camera_device_map[id] = camera_controller(id, config)
+                    self.__camera_device_map[id] = camera_controller(id)
                     if self.__camera_device_map[id].open(): # ok
                         self.__camera_device_map[id].frame_update_signal.connect(self.on_camera_frame_update)
                         if "camera_startup" in config:
@@ -119,7 +120,6 @@ class AppWindow(QMainWindow):
                 self.table_sound_files.setModel(self.__sound_resource_model)
                 self.on_load_sound_resource()
 
-
         except Exception as e:
             self.__console.critical(f"{e}")
 
@@ -127,13 +127,12 @@ class AppWindow(QMainWindow):
     def closeEvent(self, event:QCloseEvent) -> None: 
         self.__console.info("Window is now terminated")
 
-        self.__eyetracker.close()
+        if self.__eyetracker:
+            self.__eyetracker.close()
+
         for camera in self.__camera_device_map.values():
             camera.close()
             
-
-        #self.cameraWindow.close()
-        #self.close()
         return super().closeEvent(event)
 
     '''
@@ -152,7 +151,7 @@ class AppWindow(QMainWindow):
                     QMessageBox.critical(self, "Error", "Scenario file read error {}".format(str(e)))
                     
                 # parse scenario file
-                #self.runner.load_scenario(scenario_data)
+                self.runner.load_scenario(scenario_data)
                 self.scenario_model.setRowCount(0)
                 if "scenario" in scenario_data:
                     for data in scenario_data["scenario"]:
@@ -167,15 +166,19 @@ class AppWindow(QMainWindow):
     '''
     def on_scenario_start(self):
         self.__scenario_mark_row_reset()
-        #self.runner.run_scenario()
-        self.__show_on_statusbar("Simulation Scenario is now running...")
+        self.runner.run_scenario()
+        self.on_camera_record_start() # camera record start
+        self.on_eyetracker_record() # eyetracker record start
+        self.__show_on_statusbar("Scenario is now running...")
 
     '''
     Scenario Stop Event Callback Function
     '''
     def on_scenario_stop(self):
-        #self.runner.stop_scenario()
-        self.__show_on_statusbar("Simulation Scenario is stopped.")
+        self.runner.stop_scenario()
+        self.on_eyetracker_stop() # eyetracker record stop
+        self.on_camera_record_stop() # camera record stop
+        self.__show_on_statusbar("Scenario is stopped.")
 
     '''
     Scenario table mark row reset
@@ -232,8 +235,8 @@ class AppWindow(QMainWindow):
     '''
     def on_new_subject(self):
         subject_name = self.findChild(QLineEdit, name="edit_subject_name").text()
-        target_path = pathlib.Path(self.config["root_path"])/pathlib.Path(self.config["save_path"])/pathlib.Path(datetime.now().strftime("%Y-%m-%d"))/pathlib.Path(subject_name)
-        self.config["target_path"] = target_path.as_posix()
+        target_path = pathlib.Path(self.config["root_path"])/pathlib.Path(self.config["save_path"])/pathlib.Path(subject_name)/pathlib.Path(datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
+        self.config["target_workspace"] = target_path.as_posix()
         self.config["target_name"] = subject_name
         os.makedirs(target_path, exist_ok=True)
         self.label_simulation_data_path.setText(target_path.as_posix())
@@ -316,13 +319,23 @@ class AppWindow(QMainWindow):
         row = self.table_sound_files.currentIndex().row()
 
         if self.sound_files[row].name in self.__resource_sound.keys():
-            self.__resource_sound[self.sound_files[row].name].play()
-            self.sound_play(self.sound_files[row].name)
+            self.__currnet_playing_sound = self.sound_files[row].name
+            self.__resource_sound[self.__currnet_playing_sound].play()
+            self.sound_play(self.__currnet_playing_sound)
+
+    def on_sound_stop(self):
+        if self.__currnet_playing_sound:
+            if self.__currnet_playing_sound in self.__resource_sound.keys():
+                self.__resource_sound[self.__currnet_playing_sound].stop()
+        
 
     # camera record control
     def on_camera_record_start(self):
         for camera in self.__camera_device_map.values():
-            self.__console.info(f"Camera ID : {camera.get_camera_id()}")
+            self.__console.info(f"Start Recording (ID : {camera.get_camera_id()}")
+            camera.start_recording(self.config["target_workspace"])
 
     def on_camera_record_stop(self):
-        pass
+        for camera in self.__camera_device_map.values():
+            self.__console.info(f"Stop recording (ID:{camera.get_camera_id()})")
+            camera.stop_recording()
