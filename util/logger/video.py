@@ -16,10 +16,11 @@ from abc import *
 from util.logger.console import ConsoleLogger
 from datetime import datetime
 import numpy as np
+from typing import Tuple
 
 
 class VideoRecorder(QObject):
-    def __init__(self, dirpath:pathlib.Path, filename:str, resolution:(int,int), fps:float, ext:str="avi"):
+    def __init__(self, dirpath:pathlib.Path, filename:str, resolution:Tuple[int,int], fps:float, ext:str="avi"):
         super().__init__()
         
         self.__console = ConsoleLogger.get_logger()

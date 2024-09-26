@@ -60,18 +60,23 @@ class AppWindow(QMainWindow):
                 self.btn_eyetracker_record.clicked.connect(self.on_eyetracker_record)
                 self.btn_eyetracker_stop.clicked.connect(self.on_eyetracker_stop)
                 self.table_sound_files.doubleClicked.connect(self.on_dbclick_sound_select) # play selected sound file
+                self.btn_camera_record.clicked.connect(self.on_camera_record_start)
+                self.btn_camera_record_stop.clicked.connect(self.on_camera_record_stop)
 
                 # map between camera device and windows
                 self.__frame_window_map = {}
                 self.__camera_device_map = {}
                 for idx, id in enumerate(config["camera_ids"]):
                     self.__frame_window_map[id] = self.findChild(QLabel, config["camera_windows"][idx])
-                    self.__camera_device_map[id] = camera_controller(id)
+                    self.__camera_device_map[id] = camera_controller(id, config)
                     if self.__camera_device_map[id].open(): # ok
                         self.__camera_device_map[id].frame_update_signal.connect(self.on_camera_frame_update)
                         if "camera_startup" in config:
                             if config["camera_startup"]:
                                 self.__camera_device_map[id].begin()
+                    else:
+                        self.__camera_device_map[id].close()
+                        del self.__camera_device_map[id]
 
                 # scenario model
                 self.scenario_table_columns = ["Time(s)", "Message API", "Payload"]
@@ -227,7 +232,9 @@ class AppWindow(QMainWindow):
     '''
     def on_new_subject(self):
         subject_name = self.findChild(QLineEdit, name="edit_subject_name").text()
-        target_path = pathlib.Path(self.config["root_path"])/pathlib.Path(self.config["save_path"])/pathlib.Path(subject_name)
+        target_path = pathlib.Path(self.config["root_path"])/pathlib.Path(self.config["save_path"])/pathlib.Path(datetime.now().strftime("%Y-%m-%d"))/pathlib.Path(subject_name)
+        self.config["target_path"] = target_path.as_posix()
+        self.config["target_name"] = subject_name
         os.makedirs(target_path, exist_ok=True)
         self.label_simulation_data_path.setText(target_path.as_posix())
         self.__show_on_statusbar(f"Created {target_path.as_posix()}")
@@ -311,3 +318,11 @@ class AppWindow(QMainWindow):
         if self.sound_files[row].name in self.__resource_sound.keys():
             self.__resource_sound[self.sound_files[row].name].play()
             self.sound_play(self.sound_files[row].name)
+
+    # camera record control
+    def on_camera_record_start(self):
+        for camera in self.__camera_device_map.values():
+            self.__console.info(f"Camera ID : {camera.get_camera_id()}")
+
+    def on_camera_record_stop(self):
+        pass

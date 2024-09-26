@@ -40,7 +40,7 @@ class neon_controller(QObject):
         try:
             if self.device:
                 self.device.close()
-                print("Neon device is closed")
+                self.__console.info("Eyetracker device is closed")
         except RuntimeError as e:
             print(f"Runtime Error : {e}")
 
