@@ -131,11 +131,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# Custom setting for FLAME
-HOST_ADDRESS = "127.0.0.1"
-HOST_PORT = 8000
-MQTT_BROKER_ADDRESS = "127.0.0.1"
-MQTT_BROKER_PORT = 1883
-MQTT_BROKER_WEBSCOKET = 8083

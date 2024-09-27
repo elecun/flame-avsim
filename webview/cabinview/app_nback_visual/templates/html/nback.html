@@ -1,0 +1,80 @@
+{% extends "html/nback_base.html" %} 
+
+{%load static %}
+
+{% block javascript %}
+
+<script src="{% static 'plugins/bootstrap-5.3.0/js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
+{% endblock %}
+
+
+{% block contents %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+        color: white;
+    }
+
+    .view_container {
+        text-align: center;
+        color: white;
+    }
+
+    .box {
+            border: 10px solid white; /* 테두리 두께 */
+            width: 400px;  /* 고정 너비 */
+            height: 400px; /* 고정 높이 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 200px; /* 글씨 크기 */
+            color: white;
+    }
+
+    .view_button_container {
+        margin-top: 40px; /* 마진 두배 */
+    }
+
+    button {
+        padding: 20px 40px; /* 버튼 크기 두배 */
+        font-size: 40px; /* 버튼 텍스트 크기 두배 */
+        cursor: pointer;
+        border: none;
+        background-color: white;
+        color: black;
+    }
+
+    button:hover {
+        background-color: gray;
+    }
+</style>
+
+<div class="view_container">
+    <div class="box" id="nback_code">
+        
+    </div>
+    <div class="view_button_container">
+        <button id="btn_nback_correct">일치</button>
+    </div>
+</div>
+
+
+<script>
+  /* after page load */
+  window.addEventListener("DOMContentLoaded", (event) => {
+      //document.getElementById("btn_nback_correct").style.display = "none";
+  });
+
+  /* correct button event */
+  document.getElementById('btn_nback_correct').addEventListener('click', function(){
+    nback_correct_press.play();  
+  });
+</script>
+{% endblock %}

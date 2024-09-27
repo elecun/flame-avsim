@@ -7,13 +7,13 @@ User global variable definitions
 def context_processors(request):
     return {
         'system':{ 
-            'title':'FLAME-AV-Simulator',
+            'title':'Flame AVSIM Cabinview',
             'company':"IAE",
             'version':"0.1.0",
-            'host':str(settings.HOST_ADDRESS),
-            'port':str(settings.HOST_PORT),
-            'mqtt_broker_ip':str(settings.MQTT_BROKER_ADDRESS),
-            'mqtt_broker_port':int(settings.MQTT_BROKER_WEBSCOKET)
+            'host':"127.0.0.1",
+            'port':"8000",
+            'mqtt_broker_ip':"192.168.0.12",
+            'mqtt_broker_wsport':8083
             },
         'frontend':{
 
@@ -22,5 +22,3 @@ def context_processors(request):
 
         }
     }
-
-

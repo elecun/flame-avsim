@@ -4,10 +4,10 @@ from django.contrib.auth import authenticate
 from django.shortcuts import redirect
 
 
+def index_nback(request):
+    return render(request, "html/index.html")
+
 # 2-back task index page
 def index_2back(request):
-    return render(request, "html/index_2back.html")
-
-def card_2back(request):
-    return render(request, "html/card_2back.html")
+    return render(request, "html/nback.html")
 

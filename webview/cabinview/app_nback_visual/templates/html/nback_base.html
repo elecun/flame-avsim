@@ -1,0 +1,134 @@
+
+<!doctype html>
+ 
+{%load static %}
+
+<html lang="en" class="h-100" data-bs-theme="auto">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="">
+    <title></title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+    <style>
+
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script type="text/javascript">
+
+      //global resources
+      const nback_show_card = new Audio("{% static 'sound/beepc.mp3' %}");
+      const nback_correct_press = new Audio("{% static 'sound/press.mp3' %}");
+
+      function connectMQTT() {
+          var mqtt_client = new Paho.MQTT.Client("{{system.mqtt_broker_ip}}", {{system.mqtt_broker_wsport}}, "clientId_" + parseInt(Math.random() * 100, 10));
+          mqtt_client.onConnectionLost = function (responseObject) {
+              if (responseObject.errorCode !== 0) {
+                  console.log("onConnectionLost:" + responseObject.errorMessage);
+              }
+          };
+  
+          // 콜백 함수: 메시지를 받을 때 호출
+          mqtt_client.onMessageArrived = function (message) {
+              // console.log("onMessageArrived: " + message.payloadString);
+
+              try{
+                // const rep_payload = message.payloadString.replace(/'/g, '\"');
+                // const payload = JSON.parse(message.payloadString.replace(/'/g, '"'));
+                const payload = JSON.parse(message.payloadString);
+                console.info(message)
+
+                switch(message.destinationName){
+                  case "flame/avsim/cabinview/mapi_set_url":
+                    console.log(payload);
+                    if(payload.hasOwnProperty("url")){
+                        window.location.href = "http://{{system.host}}:{{system.port}}"+payload.url;
+                    }
+                    break;
+
+                  case "flame/avsim/cabinview/mapi_nback_card":
+                    console.info("ok");
+                    if(payload.hasOwnProperty("code")){
+                      document.getElementById("nback_code").innerText = payload.code;
+                      //document.getElementById("btn_nback_correct").style.display = "block";
+                      nback_show_card.play();
+                    }
+                    break;
+                }
+              }
+              catch(e){
+                console.log("message payload parse error");
+              }
+          };
+  
+          var options = {
+              onSuccess: function () {
+                  console.log("Connected to MQTT broker");
+                  // 연결 성공 시 토픽 구독
+                  mqtt_client.subscribe("flame/avsim/cabinview/#");
+              },
+              onFailure: function (message) {
+                  console.log("Connection failed: " + message.errorMessage);
+              }
+          };
+  
+          mqtt_client.connect(options);
+      }
+
+      // 페이지 로드 시 MQTT 연결 시도
+      window.onload = function () {
+          connectMQTT();
+      };
+
+      
+
+
+      /* MQTT message arrived event callback */
+      // function mqtt_onMessageArrived(message){
+      //   try {
+      //     console.log("r");
+      //     const rep_payload = message.payloadString.replace(/'/g, '\"');
+      //     console.log(rep_payload);
+      //     const payload = JSON.parse(message.payloadString.replace(/'/g, '"'));
+      //     switch(message.topic){
+      //         // move to any url
+      //         case "flame/avsim/cdlink/mapi_set_url":
+      //           console.log(payload);
+      //           if(payload.hasOwnProperty("url")){
+      //               window.location.href = "http://{{system.host}}:{{system.port}}"+payload.url;
+      //           }
+      //       break;
+      //       case "flame/avsim/cdlink/mapi_nback_card":
+      //           if(payload.hasOwnProperty("code")){
+      //             document.getElementById("nback_code").innerText = payload.code;
+      //             //document.getElementById("btn_nback_correct").style.display = "block";
+      //             nback_show_card.play();
+      //           }
+      //         break;
+      //     }
+      //   }
+      //   catch(e){
+      //     console.log("message payload parse error");
+      //   }
+      // }
+
+  
+  </script>
+
+    {% block javascript %}
+    {% endblock %}
+    
+  </head>
+
+  {% csrf_token %}
+  <body>
+
+  {% block contents %}
+  {% endblock %}
+
+  </body>
+</html>

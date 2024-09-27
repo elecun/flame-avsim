@@ -1,0 +1,66 @@
+
+{% load static %}
+
+
+<script type="text/javascript">
+
+    //let mqtt_client_id = "flame-nback-client-"+parseInt(Math.random()*10000, 10);
+    mqtt_client = new Paho.Client("{{system.mqtt_broker_ip}}", Number("{{system.mqtt_broker_port}}"), mqtt_client_id);
+    mqtt_client.onConnectionLost = mqtt_onConnectionLost;
+    mqtt_client.onMessageArrived = mqtt_onMessageArrived;
+    mqtt_client.connect({onSuccess:mqtt_onConnect, onFailure:mqtt_onFailure, reconnect: true, useSSL:false});
+    
+
+    /* MQTT Connection event callback */
+    function mqtt_onConnect(){
+        console.log("MQTT broker connected");
+        mqtt_client.subscribe("flame/avsim/cdlink/#");
+        // message = new Paho.MQTT.Message("Hello");
+        // message.destinationName = "World";
+        // client.send(message);
+    }
+
+    /* MQTT Failure event callback */
+    function mqtt_onFailure(){
+        console.log("Failed");
+    }
+
+    /* MQTT Connection lost event callback */
+    function mqtt_onConnectionLost(responseObject){
+        console.log("on connection lost occurred");
+        if(responseObject.errorCode !== 0) {
+            console.log("onConnectionLost:"+responseObject.errorMessage);
+        }
+    }
+
+    /* MQTT message arrived event callback */
+    function mqtt_onMessageArrived(message){
+        
+        /* status data update */
+        const data = JSON.parse(message.payloadString);   
+        switch(message.topic){
+            case "cdlink/location":{
+                if(data.hasOwnProperty("url")){
+                    window.location.href = "{{system.host}}"+"/"+data.url;
+                }
+            } break;
+            case "cdlink/code":{
+                if(data.hasOwnProperty("code")){
+                    document.getElementById("nback_code").innerText = data.code;
+                    document.getElementById("btn_nback_correct").style.display = "block";
+                    nback_show_card.play();
+                }
+            } break;
+            default:
+                console.log("unknown topic");
+
+        }
+    }
+
+    /* log nback task start */
+    function log_start_nback(){        
+        if(mqtt_client)
+            mqtt_client.publish("cdlink", JSON.stringify({"code":"test"}), 0);
+    }
+
+</script>

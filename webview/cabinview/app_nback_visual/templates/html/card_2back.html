@@ -1,0 +1,44 @@
+{% extends "html/nback_base.html" %} 
+
+{%load static %}
+
+{% block javascript %}
+
+<script src="{% static 'plugins/bootstrap-5.3.0/js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
+{% endblock %}
+
+
+{% block contents %}
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="mb-auto">
+    <div>
+      <h3 class="float-md-start mb-0">2-Back Task</h3>
+    </div>
+  </header>
+
+  <main class="px-3">
+    <div class="badge text-wrap" style="width: 12rem"><p style="font-size: 200px;" id="nback_code"></p></div>
+    <p></p>
+    <p class="lead">
+        <button class="btn btn-lg btn-light fw-bold border-white bg-white" id="btn_nback_correct">일치</button>
+    </p>
+
+  </main>
+
+  <footer class="mt-auto text-white-50">
+    <p></p>
+  </footer>
+</div>
+
+<script>
+  /* after page load */
+  window.addEventListener("DOMContentLoaded", (event) => {
+      //document.getElementById("btn_nback_correct").style.display = "none";
+  });
+
+  /* correct button event */
+  document.getElementById('btn_nback_correct').addEventListener('click', function(){
+    nback_correct_press.play();  
+  });
+</script>
+{% endblock %}
