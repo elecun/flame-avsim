@@ -12,7 +12,7 @@ def context_processors(request):
             'version':"0.1.0",
             'host':"127.0.0.1",
             'port':"8000",
-            'mqtt_broker_ip':"192.168.0.12",
+            'mqtt_broker_ip':"127.0.0.1",
             'mqtt_broker_wsport':8083
             },
         'frontend':{

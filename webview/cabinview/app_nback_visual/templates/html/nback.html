@@ -2,8 +2,11 @@
 
 {%load static %}
 
-{% block javascript %}
 
+{% block javascript %}
+<script>
+
+</script>
 <script src="{% static 'plugins/bootstrap-5.3.0/js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
 {% endblock %}
 
@@ -61,7 +64,7 @@
         
     </div>
     <div class="view_button_container">
-        <button id="btn_nback_correct">일치</button>
+        <button id="btn_nback_correct" onclick="emit_nback_timestamp('flame/avsim/nback/log', 'key pressed')">일치</button>
     </div>
 </div>
 
@@ -72,9 +75,6 @@
       //document.getElementById("btn_nback_correct").style.display = "none";
   });
 
-  /* correct button event */
-  document.getElementById('btn_nback_correct').addEventListener('click', function(){
-    nback_correct_press.play();  
-  });
+  
 </script>
 {% endblock %}

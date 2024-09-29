@@ -21,11 +21,29 @@
     <script type="text/javascript">
 
       //global resources
-      const nback_show_card = new Audio("{% static 'sound/beepc.mp3' %}");
+      const nback_show_card = new Audio("{% static 'sound/quindar_tone.mp3' %}");
       const nback_correct_press = new Audio("{% static 'sound/press.mp3' %}");
+      var mqtt_client = new Paho.MQTT.Client("{{system.mqtt_broker_ip}}", {{system.mqtt_broker_wsport}}, "clientId_" + parseInt(Math.random() * 100, 10));
+
+      function emit_nback_timestamp(topic, msg){
+        nback_correct_press.play();
+        
+        // publish data
+        if(mqtt_client){
+            const msg_data = {
+                timestamp: Date.now()/1000,
+                message:msg
+            };
+            
+            var message = new Paho.MQTT.Message(JSON.stringify(msg_data));
+            message.destinationName = topic;
+            message.qos = 2;
+            mqtt_client.send(message);
+        }
+      }
 
       function connectMQTT() {
-          var mqtt_client = new Paho.MQTT.Client("{{system.mqtt_broker_ip}}", {{system.mqtt_broker_wsport}}, "clientId_" + parseInt(Math.random() * 100, 10));
+          
           mqtt_client.onConnectionLost = function (responseObject) {
               if (responseObject.errorCode !== 0) {
                   console.log("onConnectionLost:" + responseObject.errorMessage);
@@ -51,10 +69,9 @@
                     break;
 
                   case "flame/avsim/cabinview/mapi_nback_card":
-                    console.info("ok");
                     if(payload.hasOwnProperty("code")){
                       document.getElementById("nback_code").innerText = payload.code;
-                      //document.getElementById("btn_nback_correct").style.display = "block";
+                      emit_nback_timestamp('flame/avsim/nback/log', 'code present');
                       nback_show_card.play();
                     }
                     break;
@@ -84,37 +101,8 @@
           connectMQTT();
       };
 
-      
-
-
-      /* MQTT message arrived event callback */
-      // function mqtt_onMessageArrived(message){
-      //   try {
-      //     console.log("r");
-      //     const rep_payload = message.payloadString.replace(/'/g, '\"');
-      //     console.log(rep_payload);
-      //     const payload = JSON.parse(message.payloadString.replace(/'/g, '"'));
-      //     switch(message.topic){
-      //         // move to any url
-      //         case "flame/avsim/cdlink/mapi_set_url":
-      //           console.log(payload);
-      //           if(payload.hasOwnProperty("url")){
-      //               window.location.href = "http://{{system.host}}:{{system.port}}"+payload.url;
-      //           }
-      //       break;
-      //       case "flame/avsim/cdlink/mapi_nback_card":
-      //           if(payload.hasOwnProperty("code")){
-      //             document.getElementById("nback_code").innerText = payload.code;
-      //             //document.getElementById("btn_nback_correct").style.display = "block";
-      //             nback_show_card.play();
-      //           }
-      //         break;
-      //     }
-      //   }
-      //   catch(e){
-      //     console.log("message payload parse error");
-      //   }
-      // }
+      {% block javascript_in %}
+      {% endblock %}
 
   
   </script>
