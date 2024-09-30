@@ -66,17 +66,32 @@
               }
           };
   
-          // 콜백 함수: 메시지를 받을 때 호출
           client.onMessageArrived = function (message) {
-              console.log("onMessageArrived: " + message.payloadString);
+
+              try{
+                // const rep_payload = message.payloadString.replace(/'/g, '\"');
+                // const payload = JSON.parse(message.payloadString.replace(/'/g, '"'));
+                const payload = JSON.parse(message.payloadString);
+
+                switch(message.destinationName){
+                  case "flame/avsim/cabinview/mapi_set_url":
+                    console.log(payload);
+                    if(payload.hasOwnProperty("url")){
+                        window.location.href = "http://{{system.host}}:{{system.port}}"+payload.url;
+                    }
+                    break;
+                }
+              }
+              catch(e){
+                console.log("message payload parse error");
+              }
+
           };
   
           var options = {
               onSuccess: function () {
                   console.log("Connected to MQTT broker");
-                  // 연결 성공 시 토픽 구독
-                  client.subscribe("flame/avsim/manager");
-                  console.log("Subscribed to: flame/avsim/manager");
+                  client.subscribe("flame/avsim/cabinview/#");
               },
               onFailure: function (message) {
                   console.log("Connection failed: " + message.errorMessage);

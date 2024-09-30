@@ -24,7 +24,7 @@
       const nback_show_card = new Audio("{% static 'sound/quindar_tone.mp3' %}");
       const nback_correct_press = new Audio("{% static 'sound/press.mp3' %}");
       var mqtt_client = new Paho.MQTT.Client("{{system.mqtt_broker_ip}}", {{system.mqtt_broker_wsport}}, "clientId_" + parseInt(Math.random() * 100, 10));
-      var interval_id;
+      
 
       function emit_nback_timestamp(topic, msg){
         nback_correct_press.play();
@@ -43,11 +43,7 @@
         }
       }
 
-      function stimulus_empty(){
-        document.getElementById("nback_code").innerText = "";
-        clearInterval(interval_id);
-      }
-
+      // mqtt connection
       function connectMQTT() {
           
           mqtt_client.onConnectionLost = function (responseObject) {
@@ -66,21 +62,22 @@
                 const payload = JSON.parse(message.payloadString);
 
                 switch(message.destinationName){
+                  // change location
                   case "flame/avsim/cabinview/mapi_set_url":
-                    console.log(payload);
                     if(payload.hasOwnProperty("url")){
                         window.location.href = "http://{{system.host}}:{{system.port}}"+payload.url;
                     }
                     break;
 
+                  // present visual stimulus (show nback code)
                   case "flame/avsim/cabinview/mapi_nback_code":
                     if(payload.hasOwnProperty("code")){
                       document.getElementById("nback_code").innerText = payload.code;
-                      emit_nback_timestamp('flame/avsim/cabinview/nback/log', 'code present');
+                      emit_nback_timestamp('flame/avsim/cabinview/nback/log', payload.code+' code present');
                       
                       let timerId = setTimeout(() => {
                         document.getElementById("nback_code").innerText = "";
-                        clearTimeout(timerId);  // 타이머 종료
+                        clearTimeout(timerId);
                       }, 760);
 
                       nback_show_card.play();
@@ -96,7 +93,6 @@
           var options = {
               onSuccess: function () {
                   console.log("Connected to MQTT broker");
-                  // 연결 성공 시 토픽 구독
                   mqtt_client.subscribe("flame/avsim/cabinview/#");
               },
               onFailure: function (message) {
@@ -107,14 +103,10 @@
           mqtt_client.connect(options);
       }
 
-      // 페이지 로드 시 MQTT 연결 시도
+      //MQTT broker connect
       window.onload = function () {
           connectMQTT();
       };
-
-      {% block javascript_in %}
-      {% endblock %}
-
   
   </script>
 

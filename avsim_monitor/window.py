@@ -119,6 +119,14 @@ class AppWindow(QMainWindow):
                 self.__sound_resource_model.setHorizontalHeaderLabels(sound_resource_table_columns)
                 self.table_sound_files.setModel(self.__sound_resource_model)
                 self.on_load_sound_resource()
+                
+                # message APIs
+                self.message_api = {
+                    "flame/avsim/cabinview/nback/log", self.mapi_nback_log
+                }
+                
+                # create log files
+                self.cabinview_logfile = open("nback.csv", "w")
 
         except Exception as e:
             self.__console.critical(f"{e}")
@@ -339,3 +347,8 @@ class AppWindow(QMainWindow):
         for camera in self.__camera_device_map.values():
             self.__console.info(f"Stop recording (ID:{camera.get_camera_id()})")
             camera.stop_recording()
+            
+    
+    # Message API
+    def mapi_nback_log(self):
+        pass
