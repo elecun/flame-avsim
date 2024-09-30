@@ -17,6 +17,8 @@ except ImportError:
     from PyQt6.uic import loadUi
     from PyQt6.QtCore import QModelIndex, QObject, Qt, QTimer, QThread, pyqtSignal
 
+from util.logger.console import ConsoleLogger
+
 
 class ScenarioRunner(QTimer):
 
@@ -25,6 +27,8 @@ class ScenarioRunner(QTimer):
 
     def __init__(self, interval_ms):
         super().__init__()
+        self.__console = ConsoleLogger.get_logger()
+
         self.time_interval = interval_ms # default interval_ms = 100ms
         self.setInterval(interval_ms)
         self.timeout.connect(self.on_timeout_callback) # timer callback

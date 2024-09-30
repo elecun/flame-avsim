@@ -11,6 +11,7 @@ import time
 import paho.mqtt.client as mqtt
 from datetime import datetime
 from pygame import mixer
+import csv
 
 try:
     # using PyQt5
@@ -94,7 +95,7 @@ class AppWindow(QMainWindow):
                 self.mq_client.connect_async(config["broker_ip"], port=1883, keepalive=60)
                 self.mq_client.loop_start()
                 for topic in config["subscribe_topics"]:
-                    self.__console.info(topic)
+                    self.__console.info(f"subscribe topic : {topic}")
 
                 # simulation scenario runner
                 self.runner = ScenarioRunner(interval_ms=100)
@@ -122,11 +123,17 @@ class AppWindow(QMainWindow):
                 
                 # message APIs
                 self.message_api = {
-                    "flame/avsim/cabinview/nback/log", self.mapi_nback_log
+                    "flame/avsim/cabinview/nback/log": self.mapi_nback_log,
+                    "flame/avsim/camera/record/start": self.mapi_camera_record_start,
+                    "flame/avsim/eyetracker/record/start": self.mapi_eyetracker_record_start,
                 }
+
+                # log files & writer
+                self.nback_logfile = None
+                self.nback_logfile_writer = None
+                self.scenario_logfile = None
+                self.scenario_logfile_writer = None
                 
-                # create log files
-                self.cabinview_logfile = open("nback.csv", "w")
 
         except Exception as e:
             self.__console.critical(f"{e}")
@@ -140,6 +147,13 @@ class AppWindow(QMainWindow):
 
         for camera in self.__camera_device_map.values():
             camera.close()
+
+        # close log file
+        if self.nback_logfile:
+            self.nback_logfile.close()
+
+        if self.scenario_logfile:
+            self.scenario_logfile.close()
             
         return super().closeEvent(event)
 
@@ -173,19 +187,39 @@ class AppWindow(QMainWindow):
     Scenario Start Event Callback Function
     '''
     def on_scenario_start(self):
+        
+        # stamp time
+        tstamp = datetime.now()
+        if self.scenario_logfile_writer:
+            self.scenario_logfile_writer.writerow([str(tstamp.timestamp()), "scenario start"])
+            self.scenario_logfile.flush()
+        
+        # show start timestamp
+        self.label_simulation_start_at.setText(tstamp.strftime("%Y-%m-%d %H:%M:%S"))
+
         self.__scenario_mark_row_reset()
         self.runner.run_scenario()
-        self.on_camera_record_start() # camera record start
-        self.on_eyetracker_record() # eyetracker record start
+        # self.on_camera_record_start() # camera record start
+        # self.on_eyetracker_record() # eyetracker record start
         self.__show_on_statusbar("Scenario is now running...")
 
     '''
     Scenario Stop Event Callback Function
     '''
     def on_scenario_stop(self):
+
+        # stamp time
+        tstamp = datetime.now()
+        if self.scenario_logfile_writer:
+            self.scenario_logfile_writer.writerow([str(tstamp.timestamp()), "scenario end"])
+            self.scenario_logfile.flush()
+
+        # show start timestamp
+        self.label_simulation_end_at.setText(tstamp.strftime("%Y-%m-%d %H:%M:%S"))
+
         self.runner.stop_scenario()
-        self.on_eyetracker_stop() # eyetracker record stop
-        self.on_camera_record_stop() # camera record stop
+        # self.on_eyetracker_stop() # eyetracker record stop
+        # self.on_camera_record_stop() # camera record stop
         self.__show_on_statusbar("Scenario is stopped.")
 
     '''
@@ -199,7 +233,7 @@ class AppWindow(QMainWindow):
     '''
     Scenario table mark colored
     '''
-    def __scenario_makr_row_color(self, row):
+    def __scenario_mark_row_color(self, row):
         for col in range(self.scenario_model.columnCount()):
             self.scenario_model.item(row,col).setBackground(QColor(255,0,0,100))
 
@@ -226,12 +260,11 @@ class AppWindow(QMainWindow):
         try:
             if mapi in self.message_api.keys():
                 payload = json.loads(msg.payload)
-                if "app" not in payload:
-                    print("message payload does not contain the app")
-                    return
-                
-                if payload["app"] != "avsim_monitor":
-                    self.message_api[mapi](payload)
+                # if "app" not in payload:
+                #     print("message payload does not contain the app")
+                #     return
+            
+                self.message_api[mapi](payload)
             else:
                 print("Unknown MAPI was called :", mapi)
 
@@ -250,15 +283,28 @@ class AppWindow(QMainWindow):
         self.label_simulation_data_path.setText(target_path.as_posix())
         self.__show_on_statusbar(f"Created {target_path.as_posix()}")
 
+        # create logfile (nback task)
+        self.nback_logfile = open(target_path/"nback_response.csv", "a")
+        self.nback_logfile_writer = csv.writer(self.nback_logfile)
+
+        # create logfile (scenario)
+        self.scenario_logfile = open(target_path/"scenario_history.csv", "a")
+        self.scenario_logfile_writer = csv.writer(self.scenario_logfile)
+
+        # initialize
+        self.label_simulation_start_at.setText("")
+        self.label_simulation_end_at.setText("")
+
 
     def do_scenario_process(self, time, mapi, message):
         message.replace("'", "\"")
         #self.mq_client.publish(mapi, message, 0) # publish mapi interface
 
+
         self.__scenario_mark_row_reset()
         for row in range(self.scenario_model.rowCount()):
             if time == float(self.scenario_model.item(row, 0).text()):
-                self.__scenario_makr_row_color(row)
+                self.__scenario_mark_row_color(row)
 
     '''
     scenario end
@@ -350,5 +396,19 @@ class AppWindow(QMainWindow):
             
     
     # Message API
-    def mapi_nback_log(self):
-        pass
+    def mapi_nback_log(self, payload:dict):
+        if self.nback_logfile_writer:
+            self.nback_logfile_writer.writerow([payload["timestamp"], payload["message"]])
+            self.nback_logfile.flush()
+
+    def mapi_camera_record_start(self):
+        self.__console.info("camera record start")
+    
+    def mapi_eyetracker_record_start(self):
+        self.__console.info("eyetracker record start")
+
+    def mapi_sound_play(self):
+        self.__console.info("sound play")
+
+    def mapi_sound_stop(self):
+        self.__console.info("sound stop")

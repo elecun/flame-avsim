@@ -3,9 +3,7 @@
         {
             "time": 0.1,
             "event": [
-                { "mapi": "flame/avsim/carla/mapi_set_scenario_start",  "message": "{'app':'avsim-manager'}"},
-                { "mapi": "flame/avsim/cam/mapi_record_start",  "message": "{'app':'avsim-manager'}"},
-                { "mapi": "flame/avsim/neon/mapi_record_start",  "message": "{'app':'avsim-manager'}"}
+                { "mapi": "flame/avsim/carla/mapi_set_scenario_start",  "message": "{'app':'avsim-manager'}"}
             ]
         },
         {
