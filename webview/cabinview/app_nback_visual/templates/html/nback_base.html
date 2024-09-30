@@ -24,6 +24,7 @@
       const nback_show_card = new Audio("{% static 'sound/quindar_tone.mp3' %}");
       const nback_correct_press = new Audio("{% static 'sound/press.mp3' %}");
       var mqtt_client = new Paho.MQTT.Client("{{system.mqtt_broker_ip}}", {{system.mqtt_broker_wsport}}, "clientId_" + parseInt(Math.random() * 100, 10));
+      var interval_id;
 
       function emit_nback_timestamp(topic, msg){
         nback_correct_press.play();
@@ -42,6 +43,11 @@
         }
       }
 
+      function stimulus_empty(){
+        document.getElementById("nback_code").innerText = "";
+        clearInterval(interval_id);
+      }
+
       function connectMQTT() {
           
           mqtt_client.onConnectionLost = function (responseObject) {
@@ -58,7 +64,6 @@
                 // const rep_payload = message.payloadString.replace(/'/g, '\"');
                 // const payload = JSON.parse(message.payloadString.replace(/'/g, '"'));
                 const payload = JSON.parse(message.payloadString);
-                console.info(message)
 
                 switch(message.destinationName){
                   case "flame/avsim/cabinview/mapi_set_url":
@@ -68,10 +73,16 @@
                     }
                     break;
 
-                  case "flame/avsim/cabinview/mapi_nback_card":
+                  case "flame/avsim/cabinview/mapi_nback_code":
                     if(payload.hasOwnProperty("code")){
                       document.getElementById("nback_code").innerText = payload.code;
-                      emit_nback_timestamp('flame/avsim/nback/log', 'code present');
+                      emit_nback_timestamp('flame/avsim/cabinview/nback/log', 'code present');
+                      
+                      let timerId = setTimeout(() => {
+                        document.getElementById("nback_code").innerText = "";
+                        clearTimeout(timerId);  // 타이머 종료
+                      }, 760);
+
                       nback_show_card.play();
                     }
                     break;

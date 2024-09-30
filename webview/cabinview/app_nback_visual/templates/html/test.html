@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centered Box with Decreasing Red Fill</title>
+  <style>
+    /* 화면 전체를 flexbox로 중앙 정렬 */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .box {
+      width: 300px;
+      height: 100px; /* 높이 100픽셀 고정 */
+      border: 2px solid black;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fill {
+      width: 100%;
+      height: 100%;
+      background-color: red;
+      position: absolute;
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <div class="fill" id="fill"></div>
+</div>
+
+<script>
+  let fillElement = document.getElementById('fill');
+  let width = 100; // fill width as percentage (100%)
+  
+  function decreaseFill() {
+    if (width > 0) {
+      width -= 1; // decrease width by 1% every interval
+      fillElement.style.width = width + '%';
+    }
+  }
+
+  // Decrease the fill every 100 milliseconds
+  setInterval(decreaseFill, 100);
+</script>
+
+</body>
+</html>
