@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1972</width>
-    <height>1421</height>
+    <height>1257</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -748,7 +748,7 @@ color: rgb(255,255,255);</string>
       <rect>
        <x>10</x>
        <y>90</y>
-       <width>101</width>
+       <width>121</width>
        <height>20</height>
       </rect>
      </property>
@@ -762,9 +762,9 @@ color: rgb(255,255,255);</string>
     <widget class="QLabel" name="label_simulation_start_at">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>140</x>
        <y>90</y>
-       <width>511</width>
+       <width>491</width>
        <height>20</height>
       </rect>
      </property>
@@ -780,7 +780,7 @@ color: rgb(255,255,255);</string>
       <rect>
        <x>10</x>
        <y>120</y>
-       <width>101</width>
+       <width>121</width>
        <height>20</height>
       </rect>
      </property>
@@ -794,9 +794,9 @@ color: rgb(255,255,255);</string>
     <widget class="QLabel" name="label_simulation_end_at">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>140</x>
        <y>120</y>
-       <width>501</width>
+       <width>481</width>
        <height>20</height>
       </rect>
      </property>
@@ -812,7 +812,7 @@ color: rgb(255,255,255);</string>
       <rect>
        <x>10</x>
        <y>150</y>
-       <width>101</width>
+       <width>121</width>
        <height>20</height>
       </rect>
      </property>
@@ -826,9 +826,9 @@ color: rgb(255,255,255);</string>
     <widget class="QLabel" name="label_simulation_data_path">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>140</x>
        <y>150</y>
-       <width>511</width>
+       <width>491</width>
        <height>20</height>
       </rect>
      </property>
@@ -907,7 +907,7 @@ color: rgb(255,255,255);</string>
      <x>0</x>
      <y>0</y>
      <width>1972</width>
-     <height>24</height>
+     <height>43</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCapture">
