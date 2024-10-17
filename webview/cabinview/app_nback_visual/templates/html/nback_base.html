@@ -21,6 +21,7 @@
     <script type="text/javascript">
 
       //global resources
+      const nback_intro = new Audio("{% static 'sound/chrime_sound.mp3' %}");
       const nback_show_card = new Audio("{% static 'sound/quindar_tone.mp3' %}");
       const nback_correct_press = new Audio("{% static 'sound/press.mp3' %}");
       var mqtt_client = new Paho.MQTT.Client("{{system.mqtt_broker_ip}}", {{system.mqtt_broker_wsport}}, "clientId_" + parseInt(Math.random() * 100, 10));

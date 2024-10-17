@@ -3,248 +3,63 @@
         {
             "time": 0.1,
             "event": [
-                { "mapi": "flame/avsim/carla/mapi_set_scenario_start",  "message": "{'app':'avsim-manager'}"}
+              { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.7}"},
+              { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"}
             ]
         },
         {
             "time": 60.0,
             "event": [
-                {"mapi": "flame/avsim/carla/mapi_set_scenario_mode", "message": "{'app':'avsim-manager'}"}
+                {"mapi": "flame/avsim/carla/mapi_set_mode_scenario", "message": "{}"},
+                { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'tesla_autopilot_on.mp3', 'volume':0.7}"}
             ]
         },
         {
-            "time": 60.1,
-            "event": [
-                {"mapi": "flame/avsim/carla/mapi_set_scenario_mode", "message": "{'app':'avsim-manager'}"}
-            ]
-        },
-        {
-            "time": 60.2,
-            "event": [
-                {"mapi": "flame/avsim/carla/mapi_set_scenario_mode", "message": "{'app':'avsim-manager'}"}
-            ]
-        },
-        {
-            "time": 60.5,
-            "event": [
-                {"mapi": "flame/avsim/carla/mapi_set_scenario_mode", "message": "{'app':'avsim-manager'}"}
-            ]
-        },
-        {
-            "time": 60.9,
-            "event": [
-                {"mapi": "flame/avsim/carla/mapi_set_scenario_mode", "message": "{'app':'avsim-manager'}"}
-            ]
-        },
-        {
-            "time": 61.1,
-            "event": [
-                {"mapi": "flame/avsim/carla/mapi_set_scenario_mode", "message": "{'app':'avsim-manager'}"}
-            ]
-        },
-        {
-            "time": 78.0,
-            "event": [
-                { "mapi": "flame/avsim/cdlink/mapi_set_url",  "message": "{'app':'avsim-manager', 'url':'/'}"}
-            ]
-        },
-        {
-            "time":79.0,
+            "time":80.0,
             "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_set_url",  "message": "{'app':'avsim-manager', 'url':'/app/nback/visual/2/'}"}
+              { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/app/nback/visual'}"}
             ]
         },
         {
-            "time":83.0,
+            "time":85.0,
             "event":[
-                { "mapi": "flame/avsim/cdlink/mapi_set_url",  "message": "{'app':'avsim-manager', 'url':'/app/nback/visual/2/card/'}"}
+              { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'A'}"}
             ]
         },
         {
-            "time":84.0,
+            "time":87.7,
             "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':2}"}
+              { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'Z'}"}
             ]
         },
         {
-            "time":87.0,
+            "time":90.4,
             "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':3}"}
+              { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'X'}"}
             ]
         },
         {
-            "time":90.0,
+            "time":95.8,
             "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':6}"}
+              { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'A'}"}
             ]
         },
         {
-            "time":93.0,
+            "time":98.5,
             "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':7}"}
+              { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'U'}"}
             ]
         },
         {
-            "time":96.0,
+            "time":101.2,
             "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':2}"}
+              { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'A'}"}
             ]
         },
         {
-            "time":99.0,
+            "time":200.0,
             "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':7}"}
-            ]
-        },
-        {
-            "time":102.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':1}"}
-            ]
-        },
-        {
-            "time":105.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':3}"}
-            ]
-        },
-        {
-            "time":108.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':6}"}
-            ]
-        },
-        {
-            "time":111.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':1}"}
-            ]
-        },
-        {
-            "time":114.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':7}"}
-            ]
-        },
-        {
-            "time":117.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':6}"}
-            ]
-        },
-        {
-            "time":120.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':9}"}
-            ]
-        },
-        {
-            "time":123.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':7}"}
-            ]
-        },
-        {
-            "time":125.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':4}"}
-            ]
-        },
-        {
-            "time":128.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':8}"}
-            ]
-        },
-        {
-            "time":131.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':2}"}
-            ]
-        },
-        {
-            "time":134.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':4}"}
-            ]
-        },
-        {
-            "time":137.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':8}"}
-            ]
-        },
-        {
-            "time":140.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':8}"}
-            ]
-        },
-        {
-            "time":143.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':1}"}
-            ]
-        },
-        {
-            "time":146.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':5}"}
-            ]
-        },
-        {
-            "time":149.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':4}"}
-            ]
-        },
-        {
-            "time":152.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':5}"}
-            ]
-        },
-        {
-            "time":155.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':7}"}
-            ]
-        },
-        {
-            "time":158.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':3}"}
-            ]
-        },
-        {
-            "time":161.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':5}"}
-            ]
-        },
-        {
-            "time":163.0,
-            "event":[
-              { "mapi": "flame/avsim/cdlink/mapi_nback_card",  "message": "{'app':'avsim-manager', 'code':7}"}
-            ]
-        },
-        {
-            "time":165.0,
-            "event":[
-                { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'app':'avsim-manager', 'file':'collision_alert_1.mp3', 'volume':0.7}"}
-            ]
-        },
-        {
-            "time":166.0,
-            "event":[
-                { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'app':'avsim-manager', 'code':9}"}
-            ]
-        },
-        {
-            "time":174.0,
-            "event": [
-                { "mapi": "flame/avsim/cam/mapi_record_stop",  "message": "{'app':'avsim-manager', 'code':9}"},
-                { "mapi": "flame/avsim/neon/mapi_record_stop",  "message": "{'app':'avsim-manager', 'code':9}"}
+                { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'tesla_autopilot_off.mp3', 'volume':0.7}"}
             ]
         }
     ]

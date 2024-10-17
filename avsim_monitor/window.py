@@ -126,6 +126,8 @@ class AppWindow(QMainWindow):
                     "flame/avsim/cabinview/nback/log": self.mapi_nback_log,
                     "flame/avsim/camera/record/start": self.mapi_camera_record_start,
                     "flame/avsim/eyetracker/record/start": self.mapi_eyetracker_record_start,
+                    "flame/avsim/mixer/mapi_play": self.mapi_sound_play, # sound play
+                    "flame/avsim/mixer/mapi_stop": self.mapi_sound_stop, # sound stop
                 }
 
                 # log files & writer
@@ -199,7 +201,7 @@ class AppWindow(QMainWindow):
 
         self.__scenario_mark_row_reset()
         self.runner.run_scenario()
-        # self.on_camera_record_start() # camera record start
+        self.on_camera_record_start() # camera record start
         # self.on_eyetracker_record() # eyetracker record start
         self.__show_on_statusbar("Scenario is now running...")
 
@@ -218,8 +220,8 @@ class AppWindow(QMainWindow):
         self.label_simulation_end_at.setText(tstamp.strftime("%Y-%m-%d %H:%M:%S"))
 
         self.runner.stop_scenario()
-        # self.on_eyetracker_stop() # eyetracker record stop
-        # self.on_camera_record_stop() # camera record stop
+        #self.on_eyetracker_stop() # eyetracker record stop
+        self.on_camera_record_stop() # camera record stop
         self.__show_on_statusbar("Scenario is stopped.")
 
     '''
@@ -259,17 +261,14 @@ class AppWindow(QMainWindow):
         
         try:
             if mapi in self.message_api.keys():
-                payload = json.loads(msg.payload)
-                # if "app" not in payload:
-                #     print("message payload does not contain the app")
-                #     return
-            
+                payload = json.loads(msg.payload)          
                 self.message_api[mapi](payload)
+                self.__console.info(f"call mapi : {mapi}")
             else:
-                print("Unknown MAPI was called :", mapi)
+                self.__console.warning(f"Unknown Message API was called : {mapi}")
 
         except json.JSONDecodeError as e:
-            print("MAPI Message payload cannot be converted")
+            self.__console.warning("Message API payload is not valid")
 
     '''
     enroll new subject button click event callback
@@ -297,28 +296,21 @@ class AppWindow(QMainWindow):
 
 
     def do_scenario_process(self, time, mapi, message):
-        message.replace("'", "\"")
-        #self.mq_client.publish(mapi, message, 0) # publish mapi interface
-
+        message = message.replace("'", '"')
+        self.mq_client.publish(mapi, message, 2) # publish mapi interface
 
         self.__scenario_mark_row_reset()
         for row in range(self.scenario_model.rowCount()):
             if time == float(self.scenario_model.item(row, 0).text()):
                 self.__scenario_mark_row_color(row)
 
-    '''
-    scenario end
-    '''
-    def __end_scenario(self):
-        self.runner.stop_scenario()
-        self.__show_on_statusbar("Scenario runner works done")
-        QMessageBox.information(self, "Scenario", "End")
 
     '''
-    End of simulation scenario
+    End of simulation scenario (call scenario runner reaches the end of the time index)
     '''
     def end_scenario_process(self):
-        self.__end_scenario()
+        self.on_scenario_stop()
+        QMessageBox.information(self, "Scenario", "End")
 
 
     # eyetracker status update
@@ -395,20 +387,24 @@ class AppWindow(QMainWindow):
             camera.stop_recording()
             
     
-    # Message API
+    # nback log via message api
     def mapi_nback_log(self, payload:dict):
         if self.nback_logfile_writer:
             self.nback_logfile_writer.writerow([payload["timestamp"], payload["message"]])
             self.nback_logfile.flush()
 
-    def mapi_camera_record_start(self):
+    # camera record start via message api
+    def mapi_camera_record_start(self, payload:dict):
         self.__console.info("camera record start")
     
-    def mapi_eyetracker_record_start(self):
+    # eyetracker record start via message api
+    def mapi_eyetracker_record_start(self, payload:dict):
         self.__console.info("eyetracker record start")
 
-    def mapi_sound_play(self):
-        self.__console.info("sound play")
+    # sound play via message api
+    def mapi_sound_play(self, payload:dict):
+        self.sound_play(payload["file"], payload["volume"])
 
-    def mapi_sound_stop(self):
-        self.__console.info("sound stop")
+    # sound stop via message api
+    def mapi_sound_stop(self, payload:dict):
+        self.on_sound_stop()
