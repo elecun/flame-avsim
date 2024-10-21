@@ -1,0 +1,150 @@
+{
+    "scenario" : [
+        {
+            "time": 0.1,
+            "event": [
+              { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"}
+            ]
+        },
+        {
+            "time": 3.0,
+            "event": [
+              { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/app/nback/visual'}"},
+              { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'chrime_sound.mp3', 'volume':0.7}"}
+            ]
+        },
+        {
+            "time":5.0,
+            "event":[
+              { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'A'}"}
+            ]
+        },
+        {
+          "time":7.7,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'K'}"}
+          ]
+        },
+        {
+          "time":10.4,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'B'}"}
+          ]
+        },
+        {
+          "time":13.1,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'M'}"}
+          ]
+        },
+        {
+          "time":15.8,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'B'}"}
+          ]
+        },
+        {
+          "time":18.5,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'F'}"}
+          ]
+        },
+        {
+          "time":21.2,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'J'}"}
+          ]
+        },
+        {
+          "time":23.9,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'T'}"}
+          ]
+        },
+        {
+          "time":26.6,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'P'}"}
+          ]
+        },
+        {
+          "time":29.3,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'Q'}"}
+          ]
+        },
+        {
+          "time":32,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'R'}"}
+          ]
+        },
+        {
+          "time":34.7,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'Q'}"}
+          ]
+        },
+        {
+          "time":37.4,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'N'}"}
+          ]
+        },
+        {
+          "time":40.1,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'M'}"}
+          ]
+        },
+        {
+          "time":42.8,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'U'}"}
+          ]
+        },
+        {
+          "time":45.5,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'N'}"}
+          ]
+        },
+        {
+          "time":50.9,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'M'}"}
+          ]
+        },
+        {
+          "time":53.6,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'N'}"}
+          ]
+        },
+        {
+          "time":56.3,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'Z'}"}
+          ]
+        },
+        {
+          "time":59,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'E'}"}
+          ]
+        },
+        {
+            "time":61.7,
+            "event":[
+              { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':''}"},
+              { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'chrime_sound.mp3', 'volume':0.7}"}
+            ]
+        },
+        {
+            "time":64,
+            "event":[
+              { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"}
+            ]
+        }
+    ]
+}
