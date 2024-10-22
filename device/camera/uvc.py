@@ -185,10 +185,10 @@ class Controller(QThread):
         save_path.mkdir(parents=True, exist_ok=True)
 
         fps, w, h = self.__uvc_camera.get_properties()
-        fourcc = cv2.VideoWriter_fourcc(*'I420') # low compression but bigger (file extension : avi) MJPG, I420
+        fourcc = cv2.VideoWriter_fourcc(*'MJPG') # low compression but bigger (file extension : avi) MJPG, I420
 
         print(f"recording camera({self.__uvc_camera.get_camera_id()}) info : ({w},{h}@{fps})")
-        self.__raw_video_writer = cv2.VideoWriter((save_path/pathlib.Path(f"cam_{self.__uvc_camera.get_camera_id()}.avi")).as_posix(), fourcc, fps, (w, h))
+        self.__raw_video_writer = cv2.VideoWriter((save_path/pathlib.Path(f"cam_{self.__uvc_camera.get_camera_id()}.avi")).as_posix(), fourcc, 30, (w, h)) # 30fps
 
         # timestamp log to csv
         self.__timestamp_file = open((save_path/f"timestamp_{self.__uvc_camera.get_camera_id()}.csv"), mode='w')

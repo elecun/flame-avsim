@@ -12,6 +12,7 @@
 
 
 {% block contents %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
     body {
         margin: 0;
@@ -53,10 +54,39 @@
         background-color: white;
         color: black;
     }
+    .button:active {
+        background-color: white;
+        color: black;
+    }
 
     button:hover {
         background-color: gray;
     }
+
+    /* 하단에 위치할 버튼 */
+    .alert-button {
+        width: 100%; /* 화면의 폭과 같게 설정 */
+        padding: 30px 0; /* 글자 크기를 좀 더 크게 하기 위해 padding을 조정 */
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 24px; /* 글자 크기를 더 크게 설정 */
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        text-align: center;
+    }
+
+    .alert-button i {
+        margin-right: 10px; /* 아이콘과 텍스트 사이의 간격 조정 */
+    }
+    .alert-button:active {
+        background-color: red;
+        color: white;
+    }
+
+    
 </style>
 
 <div class="view_container">
@@ -64,8 +94,11 @@
         
     </div>
     <div class="view_button_container">
-        <button id="btn_nback_correct" onclick="emit_nback_timestamp('flame/avsim/cabinview/nback/log', 'key pressed')">일치</button>
+        <button id="btn_nback_correct" onclick="emit_nback_timestamp('flame/avsim/cabinview/nback/log', 'correct key pressed')">일치</button>
     </div>
+
+    <!-- 하단 Alert confirm 버튼 -->
+    <button class="alert-button" onclick="emit_nback_timestamp('flame/avsim/cabinview/nback/log', 'confirm key pressed')"><i class="fas fa-exclamation-triangle"></i>주행 상황 확인</button>
 </div>
 
 <script>

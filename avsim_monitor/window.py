@@ -152,9 +152,11 @@ class AppWindow(QMainWindow):
 
         # close log file
         if self.nback_logfile:
+            self.nback_logfile.flush()
             self.nback_logfile.close()
 
         if self.scenario_logfile:
+            self.scenario_logfile.flush()
             self.scenario_logfile.close()
             
         return super().closeEvent(event)
@@ -202,7 +204,7 @@ class AppWindow(QMainWindow):
         self.__scenario_mark_row_reset()
         self.runner.run_scenario()
         self.on_camera_record_start() # camera record start
-        # self.on_eyetracker_record() # eyetracker record start
+        self.on_eyetracker_record() # eyetracker record start
         self.__show_on_statusbar("Scenario is now running...")
 
     '''
@@ -220,7 +222,7 @@ class AppWindow(QMainWindow):
         self.label_simulation_end_at.setText(tstamp.strftime("%Y-%m-%d %H:%M:%S"))
 
         self.runner.stop_scenario()
-        #self.on_eyetracker_stop() # eyetracker record stop
+        self.on_eyetracker_stop() # eyetracker record stop
         self.on_camera_record_stop() # camera record stop
         self.__show_on_statusbar("Scenario is stopped.")
 
