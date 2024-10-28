@@ -1,0 +1,12 @@
+{
+    "scenario" : [
+      {
+        "time": 0.1,
+        "comment":"initialize cabinview page",
+        "event": [
+          { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"},
+          { "mapi": "flame/avsim/carla/mapi_set_map",  "message": "{'map':'Town04'}"}
+        ]
+      }
+    ]
+}
