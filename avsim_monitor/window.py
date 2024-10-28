@@ -352,7 +352,13 @@ class AppWindow(QMainWindow):
 
     def on_eyetracker_record(self):
         if self.config["use_eyetracker"] and self.__eyetracker:
-            self.__eyetracker.record_start()
+            record_id = self.__eyetracker.record_start()
+
+            tstamp = datetime.now()
+            if self.scenario_logfile_writer:
+                self.scenario_logfile_writer.writerow([str(tstamp.timestamp()), f"Eyetracker start recording : {record_id}"])
+                self.scenario_logfile.flush()
+            
         else:
             self.__console.warning("Eyetracker device either not available or disabled")
             QMessageBox.warning(self, "Warning", "Eyetracker device either not available or disabled")

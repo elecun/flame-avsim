@@ -11,12 +11,6 @@ import argparse
 import time
 import cv2
 
-# root directory registration on system environment
-ROOT_PATH = pathlib.Path(__file__).parent
-PROJECT_NAME = pathlib.Path(__file__).parent.stem
-sys.path.append(ROOT_PATH.as_posix())
-
-from avsim_monitor.window import AppWindow
 from util.logger.console import ConsoleLogger
 
 

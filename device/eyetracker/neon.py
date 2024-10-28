@@ -26,7 +26,7 @@ class neon_controller(QObject):
         self.__console = ConsoleLogger.get_logger()
 
     def __delattr__(self, __name: str) -> None:
-        print("closing..")
+        self.__console.info("Close eyetracker")
         #self.close() # device close
 
     # device discover
@@ -49,27 +49,28 @@ class neon_controller(QObject):
                 self.device.close()
                 self.__console.info("Eyetracker device is closed")
         except RuntimeError as e:
-            print(f"Runtime Error : {e}")
+            self.__console.error(f"Runtime Error : {e}")
 
         # recording start
-    def record_start(self):
+    def record_start(self) -> str:
         if self.device:
             try:
                 record_id = self.device.recording_start()
-                print("start recording")
-                print(record_id)
+                self.__console.info(f"Start eyetracker recording... {record_id}")
+                return record_id
             except device.DeviceError as e:
-                print(f"Device Error : {e}")
+                self.__console.error(f"Device Error : {e}")
+        else:
+            return ""
 
     # recording stop
     def record_stop(self):
         if self.device:
             try:
                 ret = self.device.recording_stop_and_save()
-                print("stop recording")
-                print(ret)
+                self.__console.info("Stop eyetracker recording...")
             except device.DeviceError as e:
-                print(f"Device Error : {e}")
+                self.__console.error(f"Device Error : {e}")
 
     # get device info
     def device_info(self) -> dict:
