@@ -191,6 +191,10 @@ class AppWindow(QMainWindow):
     Scenario Start Event Callback Function
     '''
     def on_scenario_start(self):
+
+        if not "target_workspace" in self.config.keys():
+            QMessageBox.critical(self, "Error", "Workspace is not specified. Please enroll the subject.")
+            return
         
         # stamp time
         tstamp = datetime.now()
@@ -343,11 +347,22 @@ class AppWindow(QMainWindow):
 
     # eyetracker custom event callback
     def on_eyetracker_discovery(self):
-        self.__eyetracker.device_discover()
+        if self.config["use_eyetracker"] and self.__eyetracker:
+            self.__eyetracker.device_discover()
+
     def on_eyetracker_record(self):
-        self.__eyetracker.record_start()
+        if self.config["use_eyetracker"] and self.__eyetracker:
+            self.__eyetracker.record_start()
+        else:
+            self.__console.warning("Eyetracker device either not available or disabled")
+            QMessageBox.warning(self, "Warning", "Eyetracker device either not available or disabled")
+
     def on_eyetracker_stop(self):
-        self.__eyetracker.record_stop()
+        if self.config["use_eyetracker"] and self.__eyetracker:
+            self.__eyetracker.record_stop()
+        else:
+            self.__console.warning("Eyetracker device is not available")
+            
 
     # sound mixer
     def on_load_sound_resource(self):
@@ -372,6 +387,7 @@ class AppWindow(QMainWindow):
             self.sound_play(self.__currnet_playing_sound)
 
     def on_sound_stop(self):
+        # all sound stop
         if self.__currnet_playing_sound:
             if self.__currnet_playing_sound in self.__resource_sound.keys():
                 self.__resource_sound[self.__currnet_playing_sound].stop()
@@ -379,9 +395,13 @@ class AppWindow(QMainWindow):
 
     # camera record control
     def on_camera_record_start(self):
-        for camera in self.__camera_device_map.values():
-            self.__console.info(f"Start Recording (ID : {camera.get_camera_id()}")
-            camera.start_recording(self.config["target_workspace"])
+        if "target_workspace" in self.config.keys():
+            for camera in self.__camera_device_map.values():
+                self.__console.info(f"Start Recording (ID : {camera.get_camera_id()}")
+                camera.start_recording(self.config["target_workspace"])
+        else:
+            QMessageBox.critical(self, "Error", "Workspace is not specified. Please enroll the subject.")
+        
 
     def on_camera_record_stop(self):
         for camera in self.__camera_device_map.values():
