@@ -1,0 +1,11 @@
+{
+    "scenario" : [
+      {
+        "time": 20,
+        "comment":"camera capture for 20 sec",
+        "event": [
+          { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"}
+        ]
+      }
+    ]
+}

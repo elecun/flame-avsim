@@ -1,0 +1,19 @@
+{
+    "scenario" : [
+        {
+            "time": 0.1,
+            "event": [
+              { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.7}"},
+              { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"},
+              {"mapi": "flame/avsim/carla/mapi_start_run", "message": "{}"}
+            ]
+        },
+       {
+          "time":90,
+          "event":[
+            { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"},
+            {"mapi": "flame/avsim/carla/mapi_terminate", "message": "{}"}
+          ]
+        }
+    ]
+}

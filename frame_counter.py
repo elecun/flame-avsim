@@ -71,14 +71,7 @@ if __name__ == "__main__":
             sheet.append([video_path, info['fps'], info['total_frames']])
 
     workbook.save(args.out)
-
-    # if video_info:
-    #     print("Video File\t\tFrame Rate\tTotal Frames")
-    #     print("-------------------------------------------------")
-    #     for video_path, info in video_info.items():
-    #         print(f"{video_path}\t\t{info['fps']}\t\t{info['total_frames']}")
-    # else:
-    #     print("No AVI or MP4 files found in the specified directory.")
+    print(f"Saved {args.out}")
 
     try:
         pass

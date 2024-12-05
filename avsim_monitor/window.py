@@ -120,6 +120,7 @@ class AppWindow(QMainWindow):
                 self.__sound_resource_model.setHorizontalHeaderLabels(sound_resource_table_columns)
                 self.table_sound_files.setModel(self.__sound_resource_model)
                 self.on_load_sound_resource()
+                self.__sound_playing_list = []
                 
                 # message APIs
                 self.message_api = {
@@ -215,6 +216,11 @@ class AppWindow(QMainWindow):
     Scenario Stop Event Callback Function
     '''
     def on_scenario_stop(self):
+
+        # all sound stop & clear
+        for sound in self.__sound_playing_list:
+            self.__resource_sound[sound].stop()
+        self.__sound_playing_list.clear()
 
         # stamp time
         tstamp = datetime.now()
@@ -361,16 +367,10 @@ class AppWindow(QMainWindow):
             
         else:
             self.__console.warning("Eyetracker device either not available or disabled")
-            QMessageBox.warning(self, "Warning", "Eyetracker device either not available or disabled")
+            #QMessageBox.warning(self, "Warning", "Eyetracker device either not available or disabled")
 
     def on_eyetracker_stop(self):
-        if self.config["use_eyetracker"] and self.__eyetracker:
-            self.__eyetracker.record_stop()
-        else:
-            self.__console.warning("Eyetracker device is not available")
-            
-
-    # sound mixer
+        if self.config["use_eyetracker"] and self.__eyetracker:{ "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'confirmation.mp3', 'volume':0.7}"}
     def on_load_sound_resource(self):
         self.__sound_resource_model.setRowCount(0)
         for resource in self.sound_files:
@@ -378,25 +378,34 @@ class AppWindow(QMainWindow):
             self.__resource_sound[resource.name] = mixer.Sound(str(resource))
         self.table_sound_files.resizeColumnsToContents()
     
-    def sound_play(self, filename:str, volume:float=1.0):
+    def sound_play(self, filename:str, volume:float=1.0, ):
         if filename in self.__resource_sound.keys():
-            self.__resource_sound[filename].set_volume(volume)
-            self.__resource_sound[filename].play()
+            if filename in self.__sound_playing_list:
+                print("already plyaying.., Now stopping the sound")
+                self.__resource_sound[filename].stop()
+            else:
+                self.__sound_playing_list.append(filename)
+                self.__resource_sound[filename].set_volume(volume)
+                self.__resource_sound[filename].play()
             # row_index = self.resource_model.findItems(filename, Qt.MatchFlag.MatchExactly, 0)[0].row()
 
     def on_dbclick_sound_select(self):
         row = self.table_sound_files.currentIndex().row()
 
         if self.sound_files[row].name in self.__resource_sound.keys():
-            self.__currnet_playing_sound = self.sound_files[row].name
-            self.__resource_sound[self.__currnet_playing_sound].play()
-            self.sound_play(self.__currnet_playing_sound)
+            self.sound_play(self.sound_files[row].name)
 
-    def on_sound_stop(self):
+            # self.__currnet_playing_sound = self.sound_files[row].name
+            # self.__resource_sound[self.__currnet_playing_sound].play()
+            # self.sound_play(self.__currnet_playing_sound)
+
+    def on_sound_stop(self, filename:str):
+        if filename in self.__sound_playing_list:
+            self.__resource_sound[filename].stop()
         # all sound stop
-        if self.__currnet_playing_sound:
-            if self.__currnet_playing_sound in self.__resource_sound.keys():
-                self.__resource_sound[self.__currnet_playing_sound].stop()
+        # if self.__currnet_playing_sound:
+        #     if self.__currnet_playing_sound in self.__resource_sound.keys():
+        #         self.__resource_sound[self.__currnet_playing_sound].stop()
         
 
     # camera record control
