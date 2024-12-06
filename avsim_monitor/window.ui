@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1972</width>
-    <height>1422</height>
+    <height>1509</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -426,9 +426,9 @@ color: rgb(255,255,255);</string>
     <widget class="QPushButton" name="btn_sound_stop">
      <property name="geometry">
       <rect>
-       <x>250</x>
+       <x>180</x>
        <y>30</y>
-       <width>61</width>
+       <width>131</width>
        <height>31</height>
       </rect>
      </property>
@@ -437,7 +437,7 @@ color: rgb(255,255,255);</string>
 color: rgb(255,255,255);</string>
      </property>
      <property name="text">
-      <string>Stop</string>
+      <string>Stop All Channels</string>
      </property>
     </widget>
    </widget>
@@ -533,9 +533,9 @@ color: rgb(255,255,255);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>70</y>
+       <y>110</y>
        <width>781</width>
-       <height>711</height>
+       <height>671</height>
       </rect>
      </property>
      <property name="alternatingRowColors">
@@ -647,6 +647,174 @@ color: rgb(255,255,255);</string>
      </property>
      <property name="text">
       <string>Open Scenario</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../flame-avsim-manager/ico/play_circle.png</normaloff>../flame-avsim-manager/ico/play_circle.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_scenario_ndrt_training">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(150, 150, 150);
+color: rgb(255,255,255);</string>
+     </property>
+     <property name="text">
+      <string>Load NDRT Training</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../flame-avsim-manager/ico/play_circle.png</normaloff>../flame-avsim-manager/ico/play_circle.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_scenario_auto_control">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>70</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(150, 150, 150);
+color: rgb(255,255,255);</string>
+     </property>
+     <property name="text">
+      <string>Load Auto Control</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../flame-avsim-manager/ico/play_circle.png</normaloff>../flame-avsim-manager/ico/play_circle.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_scenario_manual_control">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>70</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(150, 150, 150);
+color: rgb(255,255,255);</string>
+     </property>
+     <property name="text">
+      <string>Load Manual Control</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../flame-avsim-manager/ico/play_circle.png</normaloff>../flame-avsim-manager/ico/play_circle.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_scenario_cutin">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>460</x>
+       <y>70</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(150, 150, 150);
+color: rgb(255,255,255);</string>
+     </property>
+     <property name="text">
+      <string>Load Cut-in</string>
      </property>
      <property name="icon">
       <iconset>
@@ -857,9 +1025,9 @@ color: rgb(255,255,255);</string>
     <property name="geometry">
      <rect>
       <x>1470</x>
-      <y>590</y>
-      <width>101</width>
-      <height>111</height>
+      <y>570</y>
+      <width>151</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="title">
@@ -870,7 +1038,7 @@ color: rgb(255,255,255);</string>
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>81</width>
+       <width>131</width>
        <height>31</height>
       </rect>
      </property>
@@ -887,7 +1055,7 @@ color: rgb(255,255,255);</string>
       <rect>
        <x>10</x>
        <y>70</y>
-       <width>81</width>
+       <width>131</width>
        <height>31</height>
       </rect>
      </property>
@@ -905,19 +1073,19 @@ color: rgb(255,255,255);</string>
      <rect>
       <x>1140</x>
       <y>760</y>
-      <width>361</width>
+      <width>481</width>
       <height>281</height>
      </rect>
     </property>
     <property name="title">
      <string>CARLA Weather Presets</string>
     </property>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="btn_change_weather_clearnight">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>30</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -925,12 +1093,12 @@ color: rgb(255,255,255);</string>
       <string>ClearNight</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="btn_change_weather_clearnoon">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>160</x>
        <y>30</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -938,12 +1106,12 @@ color: rgb(255,255,255);</string>
       <string>ClearNoon</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="btn_change_weather_clearsunset">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>320</x>
        <y>30</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -951,12 +1119,12 @@ color: rgb(255,255,255);</string>
       <string>ClearSunset</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_4">
+    <widget class="QPushButton" name="btn_change_weather_cloudynight">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>60</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -964,12 +1132,12 @@ color: rgb(255,255,255);</string>
       <string>CloudyNight</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_5">
+    <widget class="QPushButton" name="btn_change_weather_cloudynoon">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>160</x>
        <y>60</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -977,12 +1145,12 @@ color: rgb(255,255,255);</string>
       <string>CloudyNoon</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_6">
+    <widget class="QPushButton" name="btn_change_weather_cloudysunset">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>320</x>
        <y>60</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -990,12 +1158,12 @@ color: rgb(255,255,255);</string>
       <string>CloudySunset</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_7">
+    <widget class="QPushButton" name="btn_change_weather_hardrainnight">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>90</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1003,12 +1171,12 @@ color: rgb(255,255,255);</string>
       <string>HardRainNight</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_8">
+    <widget class="QPushButton" name="btn_change_weather_hardrainnoon">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>160</x>
        <y>90</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1016,12 +1184,12 @@ color: rgb(255,255,255);</string>
       <string>HardRainNoon</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_9">
+    <widget class="QPushButton" name="btn_change_weather_hardrainsunset">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>320</x>
        <y>90</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1029,12 +1197,12 @@ color: rgb(255,255,255);</string>
       <string>HardRainSunset</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_10">
+    <widget class="QPushButton" name="btn_change_weather_midrainynight">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>120</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1042,12 +1210,12 @@ color: rgb(255,255,255);</string>
       <string>MidRainyNight</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_11">
+    <widget class="QPushButton" name="btn_change_weather_midrainynoon">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>160</x>
        <y>120</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1055,12 +1223,12 @@ color: rgb(255,255,255);</string>
       <string>MidRainyNoon</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_12">
+    <widget class="QPushButton" name="btn_change_weather_midrainsunset">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>320</x>
        <y>120</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1068,12 +1236,12 @@ color: rgb(255,255,255);</string>
       <string>MidRainSunset</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_13">
+    <widget class="QPushButton" name="btn_change_weather_softrainnight">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>150</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1081,12 +1249,12 @@ color: rgb(255,255,255);</string>
       <string>SoftRainNight</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_14">
+    <widget class="QPushButton" name="btn_change_weather_softrainnoon">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>160</x>
        <y>150</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1094,12 +1262,12 @@ color: rgb(255,255,255);</string>
       <string>SoftRainNoon</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_15">
+    <widget class="QPushButton" name="btn_change_weather_softrainsunset">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>320</x>
        <y>150</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1107,12 +1275,12 @@ color: rgb(255,255,255);</string>
       <string>SoftRainSunset</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_16">
+    <widget class="QPushButton" name="btn_change_weather_wetcloudynight">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>180</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1120,12 +1288,12 @@ color: rgb(255,255,255);</string>
       <string>WetCloudyNight</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_17">
+    <widget class="QPushButton" name="btn_change_weather_wetcloudynoon">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>160</x>
        <y>180</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1133,12 +1301,12 @@ color: rgb(255,255,255);</string>
       <string>WetCloudyNoon</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_18">
+    <widget class="QPushButton" name="btn_change_weather_wetcloudysunset">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>320</x>
        <y>180</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1146,12 +1314,12 @@ color: rgb(255,255,255);</string>
       <string>WetCloudySunset</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_19">
+    <widget class="QPushButton" name="btn_change_weather_wetnight">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>210</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1159,12 +1327,12 @@ color: rgb(255,255,255);</string>
       <string>WetNight</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_20">
+    <widget class="QPushButton" name="btn_change_weather_wetnoon">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>160</x>
        <y>210</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1172,12 +1340,12 @@ color: rgb(255,255,255);</string>
       <string>WetNoon</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_21">
+    <widget class="QPushButton" name="btn_change_weather_wetsunset">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>320</x>
        <y>210</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1185,12 +1353,12 @@ color: rgb(255,255,255);</string>
       <string>WetSunset</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_22">
+    <widget class="QPushButton" name="btn_change_weather_default">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>240</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1198,12 +1366,12 @@ color: rgb(255,255,255);</string>
       <string>Default</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_23">
+    <widget class="QPushButton" name="btn_change_weather_duststorm">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>160</x>
        <y>240</y>
-       <width>121</width>
+       <width>141</width>
        <height>32</height>
       </rect>
      </property>
@@ -1217,14 +1385,14 @@ color: rgb(255,255,255);</string>
      <rect>
       <x>820</x>
       <y>1040</y>
-      <width>311</width>
-      <height>281</height>
+      <width>281</width>
+      <height>321</height>
      </rect>
     </property>
     <property name="title">
-     <string>CARLA Maps available</string>
+     <string>CARLA Maps</string>
     </property>
-    <widget class="QPushButton" name="pushButton_24">
+    <widget class="QPushButton" name="btn_map_change_town1">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1237,7 +1405,7 @@ color: rgb(255,255,255);</string>
       <string>Town01</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_25">
+    <widget class="QPushButton" name="btn_map_change_town10">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -1247,10 +1415,10 @@ color: rgb(255,255,255);</string>
       </rect>
      </property>
      <property name="text">
-      <string>Town01_Opt</string>
+      <string>Town10</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_26">
+    <widget class="QPushButton" name="btn_map_change_town11">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -1260,10 +1428,10 @@ color: rgb(255,255,255);</string>
       </rect>
      </property>
      <property name="text">
-      <string>Town02_Opt</string>
+      <string>Town11</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_27">
+    <widget class="QPushButton" name="btn_map_change_town2">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1276,7 +1444,7 @@ color: rgb(255,255,255);</string>
       <string>Town02</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_28">
+    <widget class="QPushButton" name="btn_map_change_town12">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -1286,10 +1454,10 @@ color: rgb(255,255,255);</string>
       </rect>
      </property>
      <property name="text">
-      <string>Town03_Opt</string>
+      <string>Town12</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_29">
+    <widget class="QPushButton" name="btn_map_change_town3">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1302,7 +1470,7 @@ color: rgb(255,255,255);</string>
       <string>Town03</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_30">
+    <widget class="QPushButton" name="btn_map_change_town4">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1315,7 +1483,7 @@ color: rgb(255,255,255);</string>
       <string>Town04</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_31">
+    <widget class="QPushButton" name="btn_map_change_town13">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -1325,10 +1493,10 @@ color: rgb(255,255,255);</string>
       </rect>
      </property>
      <property name="text">
-      <string>Town04_Opt</string>
+      <string>Town13</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_32">
+    <widget class="QPushButton" name="btn_map_change_town5">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1341,7 +1509,7 @@ color: rgb(255,255,255);</string>
       <string>Town05</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_33">
+    <widget class="QPushButton" name="btn_map_change_town14">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -1351,10 +1519,10 @@ color: rgb(255,255,255);</string>
       </rect>
      </property>
      <property name="text">
-      <string>Town05_Opt</string>
+      <string>Town14</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_35">
+    <widget class="QPushButton" name="btn_map_change_town15">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -1364,10 +1532,10 @@ color: rgb(255,255,255);</string>
       </rect>
      </property>
      <property name="text">
-      <string>Town06_Opt</string>
+      <string>Town15</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_34">
+    <widget class="QPushButton" name="btn_map_change_town6">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1380,7 +1548,7 @@ color: rgb(255,255,255);</string>
       <string>Town06</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_36">
+    <widget class="QPushButton" name="btn_map_change_town7">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1393,20 +1561,7 @@ color: rgb(255,255,255);</string>
       <string>Town07</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_37">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>210</y>
-       <width>131</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Town07_Opt</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_38">
+    <widget class="QPushButton" name="btn_map_change_town8">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1416,20 +1571,102 @@ color: rgb(255,255,255);</string>
       </rect>
      </property>
      <property name="text">
-      <string>Town10HD</string>
+      <string>Town08</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_39">
+    <widget class="QPushButton" name="btn_map_change_town9">
      <property name="geometry">
       <rect>
-       <x>140</x>
-       <y>240</y>
+       <x>10</x>
+       <y>270</y>
        <width>131</width>
        <height>32</height>
       </rect>
      </property>
      <property name="text">
-      <string>Town10HD_Opt</string>
+      <string>Town09</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_8">
+    <property name="geometry">
+     <rect>
+      <x>1110</x>
+      <y>1040</y>
+      <width>251</width>
+      <height>241</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Traffic Generation</string>
+    </property>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Vehicels :</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Walkers :</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_traffic_generate">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>190</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(150, 0,0);
+color: rgb(255,255,255);</string>
+     </property>
+     <property name="text">
+      <string>Generate</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="edit_traffic_generate_vehicles">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>30</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="edit_traffic_generate_walkers">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>64</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
      </property>
     </widget>
    </widget>

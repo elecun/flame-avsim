@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+{%load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central Overlay Message</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      display: none; /* Initially hidden */
+    }
+    #messageBox {
+      background-color: #f0f0f0;
+      padding: 40px; /* Increased padding */
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      max-width: 80%; /* Adjusts to larger content */
+      width: 600px; /* Fixed width for larger box */
+      height: 300px; /* Fixed height for larger box */
+    }
+    #messageBox h2 {
+      margin: 0;
+      font-size: 40px; /* Increased font size */
+      color: #333;
+    }
+    #messageBox p {
+      margin: 20px 0 30px;
+      font-size: 28px; /* Increased font size */
+      color: #555;
+    }
+    #closeOverlayButton {
+      padding: 20px 40px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 32px;
+      cursor: pointer;
+    }
+    #closeOverlayButton:hover {
+      background-color: #e60000;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+  <script>
+    const snd_confirm = new Audio("{% static 'sound/confirmation.mp3' %}");
+    var mqtt_client = new Paho.MQTT.Client("{{system.mqtt_broker_ip}}", {{system.mqtt_broker_wsport}}, "clientId_" + parseInt(Math.random() * 100, 10));
+
+    // mqtt connection
+    function connectMQTT() {
+          
+          mqtt_client.onConnectionLost = function (responseObject) {
+              if (responseObject.errorCode !== 0) {
+                  console.log("onConnectionLost:" + responseObject.errorMessage);
+              }
+          };
+  
+          // 콜백 함수: 메시지를 받을 때 호출
+          mqtt_client.onMessageArrived = function (message) {
+              // console.log("onMessageArrived: " + message.payloadString);
+
+              try{
+                // const rep_payload = message.payloadString.replace(/'/g, '\"');
+                // const payload = JSON.parse(message.payloadString.replace(/'/g, '"'));
+                const payload = JSON.parse(message.payloadString);
+
+                switch(message.destinationName){
+                    
+                    //notify 
+                    case "flame/avsim/cabinview/warning":
+                        show_messagebox();
+                    break;
+
+                    // change location
+                    case "flame/avsim/cabinview/mapi_set_url":
+                        if(payload.hasOwnProperty("url")){
+                            window.location.href = "http://{{system.host}}:{{system.port}}"+payload.url;
+                        }
+                    break;
+                }
+              }
+              catch(e){
+                console.log("message payload parse error");
+              }
+          };
+  
+          var options = {
+              onSuccess: function () {
+                  console.log("Connected to MQTT broker");
+                  mqtt_client.subscribe("flame/avsim/cabinview/#");
+              },
+              onFailure: function (message) {
+                  console.log("Connection failed: " + message.errorMessage);
+              }
+          };
+  
+          mqtt_client.connect(options);
+      }
+
+
+  </script>
+</head>
+<body>
+  <div id="overlay">
+    <div id="messageBox">
+      <h1><i class="fas fa-exclamation-triangle"></i> Safety Warning</h1>
+      <p>Please pay attention to the road</p>
+      <!--
+      Autopilot Navigation Ending, Please Take Over
+      Take Over Immediately
+      Apply Light Force to Steering Wheel
+      Obstacle Detected, Immediate Action Required
+      Traffic Light Ahead. Confirm Proceeding
+      -->
+      <button id="closeOverlayButton">Confirm</button>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const closeButton = document.getElementById('closeOverlayButton');
+
+    // Hide the overlay when the close button is clicked
+    closeButton.addEventListener('click', () => {
+      overlay.style.display = 'none';
+    });
+
+    window.onload = function() {
+        connectMQTT();
+    };
+
+    function show_messagebox(){
+        snd_confirm.play();
+        overlay.style.display = 'flex';
+    }
+
+    // window.addEventListener("DOMContentLoaded", (event) => {
+    //     snd_confirm.play();
+    //     overlay.style.display = 'flex';
+    // });
+    
+  </script>
+</body>
+</html>
