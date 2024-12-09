@@ -34,6 +34,7 @@ class command_broker:
 
         
     def on_mqtt_connect(self, client, userdata, flags, reason_code, properties):
+        print("connected")
         if reason_code==0:
             for topic in self.message_api.keys():
                 self.mq_client.subscribe(topic, 0)
@@ -91,8 +92,12 @@ class command_broker:
 
 if __name__=="__main__":
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--host', nargs='?', required=True, help="Broker IP Address", default="127.0.0.1")
+    args = parser.parse_args()
+
     try:
-        broker = command_broker(host = "127.0.0.1")
+        broker = command_broker(host = args.host)
         broker.loop_forever()
     except Exception as e:
         print(f"Error : {e}")
