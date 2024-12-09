@@ -8,11 +8,18 @@
         ]
     },
     {
-        "time": 3.0,
+        "time": 30.0,
         "event": [
           { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/app/nback/visual'}"},
           { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'correct.mp3', 'volume':0.7}"}
         ]
+    },
+    {
+      "time": 30.0,
+      "event": [
+        { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/app/nback/visual'}"},
+        { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'correct.mp3', 'volume':0.7}"}
+      ]
     },
     {
         "time":5.0,

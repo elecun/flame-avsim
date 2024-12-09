@@ -78,6 +78,20 @@
         text-align: center;
     }
 
+    .alert-info {
+        width: 100%; /* 화면의 폭과 같게 설정 */
+        padding: 30px 0; /* 글자 크기를 좀 더 크게 하기 위해 padding을 조정 */
+        background-color: white;
+        color: red;
+        border: none;
+        cursor: pointer;
+        font-size: 24px; /* 글자 크기를 더 크게 설정 */
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        text-align: center;
+    }
+
     .alert-button i {
         margin-right: 10px; /* 아이콘과 텍스트 사이의 간격 조정 */
     }
@@ -97,7 +111,8 @@
     </div>
 
     <!-- 하단 Alert confirm 버튼 -->
-    <button class="alert-button" onclick="emit_nback_timestamp('flame/avsim/cabinview/nback/log', 'confirm key pressed')"><i class="fas fa-exclamation-triangle"></i>주행 상황 확인</button>
+    <button class="alert-button" onclick="emit_nback_timestamp('flame/avsim/cabinview/nback/log', 'confirm key pressed')"><i class="fas fa-exclamation-triangle"></i>2-Back 태스크 시작. 이벤트 상황 발생시 눌러주세요.</button>
+    <!--<button class="alert-info" onclick="emit_nback_timestamp('flame/avsim/cabinview/nback/log', 'confirm key pressed')"><i class="fas fa-infomation"></i>2-Back 태스크를 시작. 이벤트 상황 발생시 눌러주세요.</button>-->
 </div>
 
 <script>
