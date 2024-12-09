@@ -65,6 +65,9 @@ class AppWindow(QMainWindow):
                 self.btn_camera_record_stop.clicked.connect(self.on_camera_record_stop)
                 self.btn_sound_stop.clicked.connect(self.on_sound_stop)
                 self.btn_scenario_full.clicked.connect(self.on_load_scenario_full) # full scenario load
+                self.btn_show_wifi_qr.clicked.connect(self.on_btn_show_wifi_qr) # show wifi qr on center display
+                self.btn_show_home.clicked.connect(self.on_btn_show_home) # go home
+                self.btn_show_nback.clicked.connect(self.on_btn_show_nback) # go nback
 
                 # map between camera device and windows
                 self.__frame_window_map = {}
@@ -129,7 +132,7 @@ class AppWindow(QMainWindow):
                     "flame/avsim/camera/record/start": self.mapi_camera_record_start,
                     "flame/avsim/eyetracker/record/start": self.mapi_eyetracker_record_start,
                     "flame/avsim/mixer/mapi_play": self.mapi_sound_play, # sound play
-                    "flame/avsim/mixer/mapi_stop": self.mapi_sound_stop, # sound stop
+                    "flame/avsim/mixer/mapi_stop": self.mapi_sound_stop # sound stop
                 }
 
                 # log files & writer
@@ -188,6 +191,22 @@ class AppWindow(QMainWindow):
 
                 # table view column width resizing
                 self.table_scenario_contents.resizeColumnsToContents()
+
+    def on_btn_show_wifi_qr(self):
+        """ show wifi QR code on center display"""
+        message = {"mapi": "flame/avsim/cabinview/mapi_set_url","message": "{'url':'/wifi'}"}
+        self.mapi_set_url(message)
+
+    def on_btn_show_home(self):
+        """ show home """
+        message = {"mapi": "flame/avsim/cabinview/mapi_set_url","message": "{'url':'/'}"}
+        self.mapi_set_url(message)
+
+    def on_btn_show_nback(self):
+        """ show nback """
+        message = {"mapi": "flame/avsim/cabinview/mapi_set_url","message": "{'url':'/app/nback/visual'}"}
+        self.mapi_set_url(message)
+
     
     def on_load_scenario_full(self):
         """load full scenario """
@@ -468,3 +487,8 @@ class AppWindow(QMainWindow):
     # sound stop via message api
     def mapi_sound_stop(self, payload:dict):
         self.on_sound_stop()
+
+    # go url
+    def mapi_set_url(self, payload:dict):
+        json_data = json.dumps(payload)
+        self.mq_client.publish("flame/avsim/cabinview/mapi_set_url", json_data, 2) # publish mapi interface

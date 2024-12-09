@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1972</width>
-    <height>1257</height>
+    <height>1410</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1636,7 +1636,7 @@ color: rgb(255,255,255);</string>
       <x>1110</x>
       <y>1040</y>
       <width>251</width>
-      <height>241</height>
+      <height>161</height>
      </rect>
     </property>
     <property name="title">
@@ -1677,8 +1677,8 @@ color: rgb(255,255,255);</string>
     <widget class="QPushButton" name="btn_traffic_generate">
      <property name="geometry">
       <rect>
-       <x>150</x>
-       <y>190</y>
+       <x>160</x>
+       <y>110</y>
        <width>81</width>
        <height>31</height>
       </rect>
@@ -1712,6 +1712,58 @@ color: rgb(255,255,255);</string>
      </property>
     </widget>
    </widget>
+   <widget class="QGroupBox" name="groupBox_9">
+    <property name="geometry">
+     <rect>
+      <x>1110</x>
+      <y>1210</y>
+      <width>251</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Cabin View Control</string>
+    </property>
+    <widget class="QPushButton" name="btn_show_wifi_qr">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>101</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>WiFi QR</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_show_home">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>30</y>
+       <width>101</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Home</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_show_nback">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>101</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nback</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1719,7 +1771,7 @@ color: rgb(255,255,255);</string>
      <x>0</x>
      <y>0</y>
      <width>1972</width>
-     <height>43</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCapture">

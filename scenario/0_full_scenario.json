@@ -62,7 +62,7 @@
       { "mapi": "flame/avsim/carla/process/mapi_terminate",  "message": "{'program':'automatic_control.py'}"},
       { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.5}"},
       { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'다음 실험을 시작합니다. 잠시만 기다려주십시오...'}"},
-      { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'tesla_autopilot_off.mp3', 'volume':0.7}"},
+      { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'tesla_autopilot_off.mp3', 'volume':0.7}"}
     ]},
     {"time":261.0,"event":[
       { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'file':'tesla_autopilot_off.mp3', 'volume':0.7}"},
@@ -71,7 +71,7 @@
     ]},
     {"time":281.0,"event":[
       { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'수동주행 모드 시뮬레이션을 실행합니다. 수동 조작이 가능합니다.'}"},
-      { "mapi": "flame/avsim/process/launch",  "message": "{'program':'python examples/manual_control_steeringwheel.py --res=2560x960 --pos=3840,0'}"},
+      { "mapi": "flame/avsim/process/launch",  "message": "{'program':'python examples/manual_control_steeringwheel.py --res=2560x960 --pos=3840,0'}"}
     ]},
     {"time":286.0,"event":[
       { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"},

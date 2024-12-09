@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{%load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Image</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Viewport height */
+            margin: 0;
+            background-color: white; /* 배경 색상 */
+        }
+        img {
+            max-width: 50%; /* 이미지 가로 크기를 절반으로 */
+            max-height: 50%; /* 이미지 세로 크기를 절반으로 */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+    <script>
+        const snd_confirm = new Audio("{% static 'sound/confirmation.mp3' %}");
+    var mqtt_client = new Paho.MQTT.Client("{{system.mqtt_broker_ip}}", {{system.mqtt_broker_wsport}}, "clientId_" + parseInt(Math.random() * 100, 10));
+
+    // mqtt connection
+    function connectMQTT() {
+        mqtt_client.onConnectionLost = function (responseObject) {
+            if (responseObject.errorCode !== 0) {
+                console.log("onConnectionLost:" + responseObject.errorMessage);
+            }
+        };
+
+        // 콜백 함수: 메시지를 받을 때 호출
+        mqtt_client.onMessageArrived = function (message) {
+
+            try{
+            const payload = JSON.parse(message.payloadString);
+
+            switch(message.destinationName){
+
+                // change location
+                case "flame/avsim/cabinview/mapi_set_url":
+                    if(payload.hasOwnProperty("url")){
+                        window.location.href = "http://{{system.host}}:{{system.port}}"+payload.url;
+                    }
+                break;
+            }
+            }
+            catch(e){
+            console.log("message payload parse error");
+            }
+        };
+
+        var options = {
+            onSuccess: function () {
+                console.log("Connected to MQTT broker");
+                mqtt_client.subscribe("flame/avsim/cabinview/#");
+            },
+            onFailure: function (message) {
+                console.log("Connection failed: " + message.errorMessage);
+            }
+        };
+
+        mqtt_client.connect(options);
+    }
+    </script>
+</head>
+<body>
+    <img src="{% static 'img/wifi_qr_simulator.jpg' %}" alt="Centered Image">
+    <script>
+        window.onload = function() {
+            connectMQTT();
+        };
+    </script>
+</body>
+</html>

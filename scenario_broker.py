@@ -11,87 +11,92 @@ import pathlib
 import paho.mqtt.client as mqtt
 
 from util.logger.console import ConsoleLogger
+import subprocess
 
 
-"""
-# 가상환경 내 Python 경로
-python_executable = sys.executable
+class command_broker:
+    def __init__(self, host=str):
+        self.__console = ConsoleLogger.get_logger()
 
-# 실행할 Python 프로그램과 인자
-script_path = "/path/to/other_program.py"
-args = ["arg1", "arg2"]
+        # message api
+        self.message_api = {
+            "flame/avsim/carla/process/mapi_launch": self.on_process_launch,
+            "flame/avsim/carla/process/mapi_terminate": self.on_process_terminate
+        }
 
-# 독립적인 프로세스로 실행
-process = subprocess.Popen([python_executable, script_path] + args)
+        # MQTT Connections
+        self.mq_client = mqtt.Client(callback_api_version=mqtt.CallbackAPIVersion.VERSION2, client_id="commad_broker", transport='tcp', protocol=mqtt.MQTTv311, clean_session=True)
+        self.mq_client.on_connect = self.on_mqtt_connect
+        self.mq_client.on_message = self.on_mqtt_message
+        self.mq_client.on_disconnect = self.on_mqtt_disconnect
+        self.mq_client.connect_async(host, port=1883, keepalive=60)
+        # self.mq_client.loop_start()
 
-# 프로세스가 종료될 때까지 기다리려면 .wait() 사용
-# process.wait()
-"""
+        
+    def on_mqtt_connect(self, client, userdata, flags, reason_code, properties):
+        if reason_code==0:
+            for topic in self.message_api.keys():
+                self.mq_client.subscribe(topic, 0)
+            print("Connected to broker")
+        else:
+            print("Connection Failed")
+        
+    def on_mqtt_disconnect(self, mqttc, userdata, rc):
+        print("disconnected")
 
-"""
-import os
+    def on_mqtt_message(self, client, userdata, msg):
+        mapi = str(msg.topic)
 
-# 현재 환경 변수를 복사
-env = os.environ.copy()
-env["MY_VAR"] = "some_value"
+        # test
+        self.run_command("python avsim_monitor.py --config avsim_monitor.cfg")
+        
+        try:
+            if mapi in self.message_api.keys():
+                payload = json.loads(msg.payload)          
+                self.message_api[mapi](payload)
+                self.__console.info(f"call mapi : {mapi}")
+            else:
+                self.__console.warning(f"Unknown Message API was called : {mapi}")
 
-process = subprocess.Popen(
-    [python_executable, script_path],
-    env=envqudgns
+        except json.JSONDecodeError as e:
+            self.__console.warning("Message API payload is not valid")
 
-)
-"""
+    def run_command(self, command):
+        try:
+            # subprocess.run으로 명령 실행
+            result = subprocess.run(
+                command,      # 실행할 명령 (리스트 형태로 전달)
+                shell=True,   # 문자열 명령을 쉘을 통해 실행
+                text=True,    # 출력을 문자열로 디코딩
+                capture_output=True  # 출력 캡처
+            )
+            print("Return Code:", result.returncode)
+            print("Standard Output:", result.stdout)
+            print("Standard Error:", result.stderr)
+        except Exception as e:
+            print("Error:", e)
 
-TOPIC = "flame/avsim/broker/process_run"
 
+    def on_process_launch(self, command):
+        """process run command with arguments """
+        self.run_command(command)
 
+    def on_process_terminate(self, command):
+        """process terminate command with arguments """
+        self.run_command(command)
 
-
-def on_mqtt_connect(self, client, userdata, flags, reason_code, properties):
-    """ mqtt connection """
-    if reason_code==0:
-        for topic in self.message_api.keys():
-            self.mq_client.subscribe(topic, 0)
-        print("Connected to broker for DualControl")
-    else:
-        print("Connection Failed")
-
-def on_mqtt_message(self, client, userdata, msg):
-    """on message received """
-    mapi = str(msg.topic)
-    try:
-        if mapi in self.message_api.keys():
-            payload = json.loads(msg.payload)
-            self.message_api[mapi](payload)
-            
-    except json.JSONDecodeError as e:
-        print("Message API parse error occurred!")
-
-def on_mqtt_disconnect(self, client, userdata, reason_code):
-    print("disconnected to broker for DUalControl")
-
-def on_process_run(self):
-    """process run command with arguments """
-    pass
-
-# message api
-message_api = {
-                "flame/avsim/broker/process_run": on_process_run
-            }
+    def loop_forever(self):
+        self.mq_client.loop_forever()
 
 
 if __name__=="__main__":
-    console = ConsoleLogger.get_logger()
-
-    mq_client = mqtt.Client(client_id="avsim_monitor", transport='tcp', protocol=mqtt.MQTTv311, clean_session=True)
-    mq_client.on_connect = on_mqtt_connect
-    mq_client.on_message = on_mqtt_message
-    mq_client.on_disconnect = on_mqtt_disconnect
 
     try:
-        mq_client.connect(host="192.168.0.30", port=1883, keepalive=60)
+        broker = command_broker(host = "127.0.0.1")
+        broker.loop_forever()
     except Exception as e:
-        print(f"Could not connect to Broker : {e}")
-        exit(1)
-
-    mq_client.loop_forever() # waiting for ever
+        print(f"Error : {e}")
+    except KeyboardInterrupt as e:
+        print(f"Error : {e}")
+    
+    exit(1)

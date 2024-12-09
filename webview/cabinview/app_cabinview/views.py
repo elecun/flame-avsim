@@ -9,3 +9,6 @@ def index(request):
 
 def button_event(request):
     return render(request, "button_event.html")
+
+def wifi_qr(request):
+    return render(request, "wifi_qr.html")
