@@ -1,237 +1,102 @@
 {
   "scenario" : [
-    {
-        "time": 0.1,
-        "event": [
-          { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"},
-          { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.7}"}
-        ]
-    },
-    {
-        "time": 30.0,
-        "event": [
-          { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/app/nback/visual'}"},
-          { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'correct.mp3', 'volume':0.7}"}
-        ]
-    },
-    {
-      "time": 30.0,
-      "event": [
-        { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/app/nback/visual'}"},
-        { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'correct.mp3', 'volume':0.7}"}
-      ]
-    },
-    {
-        "time":5.0,
-        "event":[
-          { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'A'}"}
-        ]
-    },
-    {
-      "time":7.7,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'K'}"}
-      ]
-    },
-    {
-      "time":10.4,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'B'}"}
-      ]
-    },
-    {
-      "time":13.1,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'M'}"}
-      ]
-    },
-    {
-      "time":15.8,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'B'}"}
-      ]
-    },
-    {
-      "time":18.5,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'F'}"}
-      ]
-    },
-    {
-      "time":21.2,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'J'}"}
-      ]
-    },
-    {
-      "time":23.9,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'F'}"}
-      ]
-    },
-    {
-      "time":26.6,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'P'}"}
-      ]
-    },
-    {
-      "time":29.3,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'Q'}"}
-      ]
-    },
-    {
-      "time":32,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'R'}"}
-      ]
-    },
-    {
-      "time":34.7,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'Q'}"}
-      ]
-    },
-    {
-      "time":37.4,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'Q'}"}
-      ]
-    },
-    {
-      "time":40.1,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'M'}"}
-      ]
-    },
-    {
-      "time":42.8,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'U'}"}
-      ]
-    },
-    {
-      "time":45.5,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'N'}"}
-      ]
-    },
-    {
-      "time":48.2,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'M'}"}
-      ]
-    },
-    {
-      "time":50.9,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'N'}"}
-      ]
-    },
-    {
-      "time":53.6,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'Z'}"}
-      ]
-    },
-    {
-      "time":56.3,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'E'}"}
-      ]
-    },
-    {
-      "time":59.0,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'E'}"}
-      ]
-    },
-    {
-      "time":61.7,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'I'}"}
-      ]
-    },
-    {
-      "time":64.4,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'X'}"}
-      ]
-    },
-    {
-      "time":67.1,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'P'}"}
-      ]
-    },
-    {
-      "time":69.8,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'I'}"}
-      ]
-    },
-    {
-      "time":72.5,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'V'}"}
-      ]
-    },
-    {
-      "time":75.2,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'G'}"}
-      ]
-    },
-    {
-      "time":77.9,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'V'}"}
-      ]
-    },
-    {
-      "time":80.6,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'D'}"}
-      ]
-    },
-    {
-      "time":83.3,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'J'}"}
-      ]
-    },
-    {
-      "time":86.0,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'W'}"}
-      ]
-    },
-    {
-      "time":88.7,
-      "event":[
-        { "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'J'}"}
-        
-      ]
-    },
-    {
-        "time":91.4,
-        "event":[
-          { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"},
-          { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'confirmation.mp3', 'volume':0.7}"}
-        ]
-    },
-    {
-      "time":116.4,
-      "event":[
-        {"mapi": "flame/avsim/carla/mapi_start_run", "message": "{}"}
-      ]
-    },
-    {
-      "time":121.4,
-      "event":[
-        {"mapi": "flame/avsim/carla/mapi_start_run", "message": "{}"}
-      ]
-    }
+    {"time": 0.1,"event": [
+      {"mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"},
+      {"mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'program':'python util/config.py -m Town15'}"}
+    ]},
+    {"time": 2.0,"event": [{ "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'실험을 시작합니다. 잠시만 기다려주십시오...'}"}]},
+    {"time": 32.0,"event": [{ "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'다음에 제시될 태스크(2-Back)를 수행하십시오.'}"}]},
+    {"time":35.0, "event": [
+      { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/app/nback/visual'}"},
+      { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.5}"}
+    ]},
+    {"time":37.7,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'Q'}"}]},
+    {"time":40.4,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'K'}"}]},
+    {"time":43.1,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'A'}"}]},
+    {"time":45.8,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'C'}"}]},
+    {"time":48.5,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'A'}"}]},
+    {"time":51.2,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'H'}"}]},
+    {"time":53.9,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'N'}"}]},
+    {"time":56.6,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'E'}"}]},
+    {"time":59.3,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'N'}"}]},
+    {"time":62.0,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'O'}"}]},
+    {"time":64.7,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'U'}"}]},
+    {"time":67.4,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'P'}"}]},
+    {"time":70.1,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'E'}"}]},
+    {"time":72.8,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'P'}"}]},
+    {"time":75.5,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'C'}"}]},
+    {"time":78.2,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'L'}"}]},
+    {"time":80.9,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'K'}"}]},
+    {"time":83.6,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'L'}"}]},
+    {"time":86.3,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'B'}"}]},
+    {"time":89.0,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'W'}"}]},
+    {"time":91.7,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'B'}"}]},
+    {"time":94.4,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'X'}"}]},
+    {"time":97.1,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'I'}"}]},
+    {"time":99.8,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'X'}"}]},
+    {"time":102.5,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'A'}"}]},
+    {"time":105.2,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'T'}"}]},
+    {"time":107.9,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'A'}"}]},
+    {"time":110.6,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'M'}"}]},
+    {"time":113.3,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'N'}"}]},
+    {"time":116.0,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'M'}"}]},
+    {"time":118.7,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'Z'}"}]},
+    {"time":121.4,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'J'}"}]},
+    {"time":124.1,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'S'}"}]},
+    {"time":126.8,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'R'}"}]},
+    {"time":129.5,"event":[{ "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"}]},
+    {"time":131.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'다음 실험을 시작합니다. 잠시만 기다려주십시오...'}"},
+      { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.5}"}
+    ]},
+    {"time":155.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'자율주행 모드 시뮬레이션을 실행합니다.'}"},
+      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'program':'python examples/automatic_control.py --res=2560x960 --pos=3840,0 -l'}"}
+    ]},
+    {"time":161.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':''}"},
+      { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'tesla_autopilot_on.mp3', 'volume':0.7}"},
+      { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.5}"}
+    ]},
+    {"time":251.0,"event":[
+      { "mapi": "flame/avsim/carla/process/mapi_terminate",  "message": "{'program':'automatic_control.py'}"},
+      { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.5}"},
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'다음 실험을 시작합니다. 잠시만 기다려주십시오...'}"},
+      { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'tesla_autopilot_off.mp3', 'volume':0.7}"},
+    ]},
+    {"time":261.0,"event":[
+      { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'file':'tesla_autopilot_off.mp3', 'volume':0.7}"},
+      { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'file':'tesla_autopilot_on.mp3', 'volume':0.7}"}
+      
+    ]},
+    {"time":281.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'수동주행 모드 시뮬레이션을 실행합니다. 수동 조작이 가능합니다.'}"},
+      { "mapi": "flame/avsim/process/launch",  "message": "{'program':'python examples/manual_control_steeringwheel.py --res=2560x960 --pos=3840,0'}"},
+    ]},
+    {"time":286.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"},
+      { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.5}"}
+    ]},
+    {"time":376.0,"event":[
+      { "mapi": "flame/avsim/process/terminate",  "message": "{'program':'manual_control_steeringwheel.py'}"},
+      { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.5}"},
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'다음 실험을 시작합니다. 잠시만 기다려주십시오...'}"}
+    ]},
+    {"time":406.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'자율주행 모드 시뮬레이션이 실행됩니다. 주행 중간에 제시되는 태스크(2-Back)를 수행하십시오.'}"},
+      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'program':'python scenario_runner/manual_control.py --res=2560x960 --pos=3840,0 --rolename=ego_vehicle'}"}
+    ]},
+    {"time":412.0,"event":[
+      { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'tesla_autopilot_on.mp3', 'volume':0.7}"},
+      { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.7}"}
+    ]},
+    {"time":440.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/app/nback/visual'}"},
+      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'program':'python scenario_runner/manual_control.py --res=2560x960 --pos=3840,0 --rolename=ego_vehicle'}"}
+    ]},
+    {"time":536.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/app/nback/visual'}"},
+      { "mapi": "flame/avsim/carla/process/mapi_terminate",  "message": "{'program':'manual_control.py'}"}
+    ]}
   ]
 }

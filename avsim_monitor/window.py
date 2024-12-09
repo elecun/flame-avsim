@@ -64,6 +64,7 @@ class AppWindow(QMainWindow):
                 self.btn_camera_record.clicked.connect(self.on_camera_record_start)
                 self.btn_camera_record_stop.clicked.connect(self.on_camera_record_stop)
                 self.btn_sound_stop.clicked.connect(self.on_sound_stop)
+                self.btn_scenario_full.clicked.connect(self.on_load_scenario_full) # full scenario load
 
                 # map between camera device and windows
                 self.__frame_window_map = {}
@@ -188,6 +189,28 @@ class AppWindow(QMainWindow):
                 # table view column width resizing
                 self.table_scenario_contents.resizeColumnsToContents()
     
+    def on_load_scenario_full(self):
+        """load full scenario """
+        self.scenario_filepath = pathlib.Path(self.config["root_path"]) / "scenario" / "0_full_scenario.json"
+        print(f"Load Full Scenario : {self.scenario_filepath.as_posix()}")
+        sfile = open(self.scenario_filepath, "r")
+        with sfile:
+            try:
+                scenario_data = json.load(sfile)
+            except Exception as e:
+                QMessageBox.critical(self, "Error", "Scenario file read error {}".format(str(e)))
+                
+            # parse scenario file
+            self.runner.load_scenario(scenario_data)
+            self.scenario_model.setRowCount(0)
+            if "scenario" in scenario_data:
+                for data in scenario_data["scenario"]:
+                    for event in data["event"]:
+                        self.scenario_model.appendRow([QStandardItem(str(data["time"])), QStandardItem(event["mapi"]), QStandardItem(event["message"])])
+
+            # table view column width resizing
+            self.table_scenario_contents.resizeColumnsToContents()
+
     '''
     Scenario Start Event Callback Function
     '''
