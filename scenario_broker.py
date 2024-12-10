@@ -177,8 +177,8 @@ class command_broker:
                     self.__console.info(f"[Process {process_id}] {output.strip()}")
 
             error_output = process.stderr.read()
-            if error_output:
-                self.__console.error(f"{command} =  {error_output.strip()}")
+            # if error_output:
+            #     self.__console.error(f"{command} =  {error_output.strip()}")
 
             return_code = process.poll()
             self.__console.info(f"Process {process_id} ('{command}') exited with return code: {return_code}")
