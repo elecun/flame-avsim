@@ -133,10 +133,12 @@ class command_broker:
 
     def on_mqtt_message(self, client, userdata, msg):
         mapi = str(msg.topic)
-        
+        self.__console.info(f"Message API : {mapi}")
+
         try:
             if mapi in self.message_api.keys():
-                payload = json.loads(msg.payload)          
+                self.__console.info(f"Payload : {msg.payload}")
+                payload = json.loads(msg.payload)
                 self.message_api[mapi](payload)
                 self.__console.info(f"Call mapi : {mapi}")
             else:
