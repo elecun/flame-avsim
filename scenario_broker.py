@@ -194,6 +194,10 @@ class command_broker:
         """subprocess termination by force"""
         process = self.processes.get(process_id)
         if process:
+            while process.poll() is None:
+                user_in = input("x")
+                process.stdin.write(user_in)
+                process.stdin.flush()
             self.__console.info(f"Process {process_id} terminated.")
             process.terminate()
         else:
