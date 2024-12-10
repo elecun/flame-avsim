@@ -194,8 +194,8 @@ class command_broker:
         """subprocess termination by force"""
         process = self.processes.get(process_id)
         if process:
-            process.terminate()
             self.__console.info(f"Process {process_id} terminated.")
+            process.terminate()
         else:
             self.__console.info(f"No process with ID {process_id} is running.")
     
