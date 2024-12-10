@@ -69,8 +69,26 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
   <script>
-    const snd_confirm = new Audio("{% static 'sound/confirmation.mp3' %}");
+    const snd_confirm = new Audio("{% static 'sound/press.mp3' %}");
+    const snd_error = new Audio("{% static 'sound/tesla_error.mp3' %}");
     var mqtt_client = new Paho.MQTT.Client("{{system.mqtt_broker_ip}}", {{system.mqtt_broker_wsport}}, "clientId_" + parseInt(Math.random() * 100, 10));
+
+    function emit_nback_timestamp(topic, msg){
+      snd_confirm.play();
+      
+      // publish data
+      if(mqtt_client){
+          const msg_data = {
+              timestamp: Date.now()/1000,
+              message:msg
+          };
+          
+          var message = new Paho.MQTT.Message(JSON.stringify(msg_data));
+          message.destinationName = topic;
+          message.qos = 2;
+          mqtt_client.send(message);
+      }
+    }
 
     // mqtt connection
     function connectMQTT() {
@@ -93,8 +111,9 @@
                 switch(message.destinationName){
                     
                     //notify 
-                    case "flame/avsim/cabinview/warning":
+                    case "flame/avsim/cabinview/mapi_event":
                         show_messagebox();
+                        snd_error.play();
                     break;
 
                     // change location
@@ -129,8 +148,8 @@
 <body>
   <div id="overlay">
     <div id="messageBox">
-      <h1><i class="fas fa-exclamation-triangle"></i> Safety Warning</h1>
-      <p>Please pay attention to the road</p>
+      <h1><i class="fas fa-exclamation-triangle"></i> System Warning</h1>
+      <p>Autopilot features are temporarily unavailable. Please pay attention to the road.</p>
       <!--
       Autopilot Navigation Ending, Please Take Over
       Take Over Immediately
@@ -149,6 +168,7 @@
     // Hide the overlay when the close button is clicked
     closeButton.addEventListener('click', () => {
       overlay.style.display = 'none';
+      emit_nback_timestamp("flame/avsim/cabinview/nback/log", "warning confirm key pressed");
     });
 
     window.onload = function() {
