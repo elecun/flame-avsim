@@ -203,13 +203,13 @@ class command_broker:
         """process run command with arguments """
         self.run_command(payload["command"])
 
-    def on_process_terminate(self, command:str):
+    def on_process_terminate(self, payload:dict):
         """process terminate command with arguments """
-        # self.run_command(command)
-
+        command = payload["command"]
         # find pid with command
         if command in self.pid_banker.keys():
             self.terminate_process(self.pid_banker[command])
+            self.__console.info(f"Now terminating the process {self.pid_banker[command]}")
 
     def loop_forever(self):
         self.mq_client.loop_forever()
