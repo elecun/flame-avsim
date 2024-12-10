@@ -197,14 +197,13 @@ class command_broker:
         else:
             self.__console.info(f"No process with ID {process_id} is running.")
     
-    def on_process_launch(self, command):
+    def on_process_launch(self, payload:dict):
         """process run command with arguments """
-        self.__console.info(f"Received command : {command}({type(command)})")
-        self.run_command(command)
+        self.run_command(payload["command"])
 
-    def on_process_terminate(self, command):
+    def on_process_terminate(self, command:str):
         """process terminate command with arguments """
-        self.run_command(command)
+        # self.run_command(command)
 
         # find pid with command
         if command in self.pid_banker.keys():
