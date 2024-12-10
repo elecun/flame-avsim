@@ -182,6 +182,8 @@ class command_broker:
 
             return_code = process.poll()
             self.__console.info(f"Process {process_id} ('{command}') exited with return code: {return_code}")
+            self.pid_banker.pop(command)
+            self.__console.info(f"container size : {len(self.pid_banker)}")
 
         except Exception as e:
             self.__console.error(f"An error occurred while executing '{command}': {e}")
