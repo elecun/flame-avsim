@@ -118,7 +118,7 @@ class command_broker:
         self.mq_client.on_message = self.on_mqtt_message
         self.mq_client.on_disconnect = self.on_mqtt_disconnect
         self.mq_client.connect_async(host, port=1883, keepalive=60)
-        self.mq_client.loop_start()
+        # self.mq_client.loop_start()
 
     def on_mqtt_connect(self, client, userdata, flags, reason_code, properties):
         if reason_code==0:
@@ -207,6 +207,9 @@ class command_broker:
         if command in self.pid_banker.keys():
             self.terminate_process(self.pid_banker[command])
 
+    def loop_forever(self):
+        self.mq_client.loop_forever()
+
 if __name__=="__main__":
     
     console = ConsoleLogger.get_logger()
@@ -217,7 +220,7 @@ if __name__=="__main__":
 
     try:
         broker = command_broker(host = args.host)
-        # broker.loop_forever()
+        broker.loop_forever()
 
         for thread in broker.threads_container:
             thread.join()
