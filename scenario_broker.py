@@ -199,7 +199,7 @@ class command_broker:
     
     def on_process_launch(self, command):
         """process run command with arguments """
-        self.__console.info(f"Received command : {command}")
+        self.__console.info(f"Received command : {command}({type(command)})")
         self.run_command(command)
 
     def on_process_terminate(self, command):
