@@ -6,3 +6,9 @@ from django.shortcuts import redirect
 
 def index_nback(request):
     return render(request, "html/nback.html")
+
+def index_nback_qr(request):
+    return render(request, "html/nback_link_qr.html")
+
+def index_nback_phone(request):
+    return render(request, "html/nback_phone.html")

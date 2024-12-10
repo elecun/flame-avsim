@@ -444,6 +444,10 @@ class AppWindow(QMainWindow):
     def on_sound_stop(self, filename:str):
         if filename in self.__sound_playing_list:
             self.__resource_sound[filename].stop()
+            self.__console.info(f"Sound stop : {filename}")
+            if filename in self.__sound_playing_list:
+                idx = self.__sound_playing_list.index(filename)
+                self.__sound_playing_list.pop(idx)
         # all sound stop
         # if self.__currnet_playing_sound:
         #     if self.__currnet_playing_sound in self.__resource_sound.keys():
@@ -486,7 +490,7 @@ class AppWindow(QMainWindow):
 
     # sound stop via message api
     def mapi_sound_stop(self, payload:dict):
-        self.on_sound_stop()
+        self.on_sound_stop(payload["file"])
 
     # go url
     def mapi_set_url(self, payload:dict):

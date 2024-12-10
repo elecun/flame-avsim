@@ -1,0 +1,45 @@
+{
+  "scenario" : [
+    {"time": 0.1,"event": [
+      {"mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"},
+      {"mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'command':'python ../PythonAPI/util/config.py -m Town15'}"}
+    ]},
+    {"time":15.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'자율주행 모드 시뮬레이션을 실행합니다.'}"},
+      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'command':'python ../PythonAPI/examples/automatic_control.py --res=2560x960 --pos=3840,0 -l'}"}
+    ]},
+    {"time":30.0,"event":[
+      { "mapi": "flame/avsim/carla/process/mapi_terminate",  "message": "{'command':'python ../PythonAPI/examples/automatic_control.py --res=2560x960 --pos=3840,0 -l'}"}
+    ]},
+    {"time":40.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'수동주행 모드 시뮬레이션을 실행합니다. 수동 조작이 가능합니다.'}"},
+      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'command':'python ../PythonAPI/examples/manual_control_steeringwheel.py --res=2560x960 --pos=3840,0'}"}
+    ]},
+    {"time":55.0,"event":[
+      { "mapi": "flame/avsim/carla/process/terminate",  "message": "{'command':'python ../PythonAPI/examples/manual_control_steeringwheel.py --res=2560x960 --pos=3840,0'}"},
+      { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.7}"},
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'다음 실험을 시작합니다. 잠시만 기다려주십시오...'}"}
+    ]},
+    {"time":80.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'자율주행 모드 시뮬레이션이 실행됩니다. 주행 중간에 제시되는 태스크를 수행하십시오.'}"},
+      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'command':'python ../PythonAPI/scenario_runner/manual_control.py --res=2560x960 --pos=3840,0 --rolename=ego_vehicle'}"}
+    ]},
+    {"time":100.0,"event":[{ "mapi": "flame/avsim/carla/process/mapi_launch", "message": "{'command':'python ../PythonAPI/util/config.py -m Town15'}"}]},
+    {"time":110.0,"event":[{ "mapi": "flame/avsim/carla/process/mapi_launch", "message": "{'command':'python ../PythonAPI/util/config.py --weather MidRainyNight'}"}]},
+    {"time":120.0,"event":[
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'자율주행 모드 시뮬레이션을 실행합니다.'}"},
+      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'command':'python ../PythonAPI/examples/automatic_control.py --res=2560x960 --pos=3840,0 -l'}"}
+    ]},
+    {"time":555.0,"event": [{ "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'스마트폰으로 다음에 나타나는 QR코드로 태그하세요.'}"}]},
+    {"time":565.0,"event":[{ "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/app/nback/visual/qr'}"}]},
+    {"time":580.0,"event":[{ "mapi": "flame/avsim/cabinview/mapi_set_url", "message": "{'url':'/event'}"}]},
+    {"time":582.7,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'U'}"}]},
+    {"time":585.4,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'K'}"}]},
+    {"time":588.1,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'X'}"}]},
+    {"time":590.8,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'K'}"}]},
+    {"time":593.5,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'T'}"}]},
+    {"time":596.2,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'W'}"}]},
+    {"time":598.9,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'O'}"}]},
+    {"time":601.6,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'I'}"}]}
+  ]
+}
