@@ -108,8 +108,8 @@ class command_broker:
 
         # message api
         self.message_api = {
-            "flame/avsim/carla/process/mapi_launch": self.on_process_launch,
-            "flame/avsim/carla/process/mapi_terminate": self.on_process_terminate
+            "flame/avsim/carla/process/mapi_launch": self.on_process_launch
+            #"flame/avsim/carla/process/mapi_terminate": self.on_process_terminate
         }
 
         # MQTT Connections
@@ -183,7 +183,6 @@ class command_broker:
             return_code = process.poll()
             self.__console.info(f"Process {process_id} ('{command}') exited with return code: {return_code}")
             self.pid_banker.pop(command)
-            self.__console.info(f"container size : {len(self.pid_banker)}")
 
         except Exception as e:
             self.__console.error(f"An error occurred while executing '{command}': {e}")
@@ -194,12 +193,8 @@ class command_broker:
         """subprocess termination by force"""
         process = self.processes.get(process_id)
         if process:
-            while process.poll() is None:
-                user_in = input("x")
-                process.stdin.write(user_in)
-                process.stdin.flush()
+            # process.terminate()
             self.__console.info(f"Process {process_id} terminated.")
-            process.terminate()
         else:
             self.__console.info(f"No process with ID {process_id} is running.")
     
