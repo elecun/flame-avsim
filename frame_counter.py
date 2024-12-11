@@ -49,6 +49,7 @@ def find_and_get_info(directory):
                 fps, total_frames = get_video_info(video_path)
                 if fps is not None and total_frames is not None:
                     results[video_path] = {'fps': fps, 'total_frames': total_frames}
+                    print(f"Found file {video_path}")
     return results
 
 if __name__ == "__main__":
@@ -56,7 +57,7 @@ if __name__ == "__main__":
 
     # arguments
     parser = argparse.ArgumentParser(description="Get frame rates of video file in a directory")
-    parser.add_argument('--path', nargs='?', required=True, help="Dataset Path", default="/mnt/avsim_nas")
+    parser.add_argument('--path', nargs='?', required=True, help="Dataset Path", default="/mnt/avsim_nas/iae_dataset/Raw")
     parser.add_argument('--out', nargs='?', required=True, help="Output Filename(*.xlsx)", default="result.xlsx")
     args = parser.parse_args()
 

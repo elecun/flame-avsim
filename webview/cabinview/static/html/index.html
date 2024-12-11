@@ -67,7 +67,7 @@
   <!-- Bootstrap JS -->
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
    <script>
-    const show_text_sound = new Audio("{% static 'sound/confirmation.mp3' %}");
+        const show_text_sound = new Audio("{% static 'sound/confirmation.mp3' %}");
         
       function connectMQTT() {
           var client = new Paho.MQTT.Client("{{system.mqtt_broker_ip}}", {{system.mqtt_broker_wsport}}, "clientId_" + parseInt(Math.random() * 100, 10));
@@ -88,17 +88,13 @@
                   case "flame/avsim/cabinview/mapi_set_url": // show set url
                     console.log(payload);
                     if(payload.hasOwnProperty("url")){
-                        console.log("url exist");
                         window.location.href = "http://{{system.host}}:{{system.port}}"+payload.url;
-                    }
-                    else {
-                        console.log("url not exist");
                     }
                     break;
                   case "flame/avsim/cabinview/mapi_show_text": //show text message
                     if(payload.hasOwnProperty("text")){
-                        document.getElementById("message_text").innerText = payload.text;
                         show_text_sound.play();
+                        document.getElementById("message_text").innerText = payload.text;
                     }
                     break;
                 }

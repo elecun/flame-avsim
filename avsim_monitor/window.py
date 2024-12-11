@@ -412,7 +412,11 @@ class AppWindow(QMainWindow):
             #QMessageBox.warning(self, "Warning", "Eyetracker device either not available or disabled")
 
     def on_eyetracker_stop(self):
-        if self.config["use_eyetracker"] and self.__eyetracker:{ "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'confirmation.mp3', 'volume':0.7}"}
+        if self.__eyetracker:
+            self.__eyetracker.record_stop()
+            self.__console.info("Eyetracker record stopped")
+        
+
     def on_load_sound_resource(self):
         self.__sound_resource_model.setRowCount(0)
         for resource in self.sound_files:
@@ -421,14 +425,16 @@ class AppWindow(QMainWindow):
         self.table_sound_files.resizeColumnsToContents()
     
     def sound_play(self, filename:str, volume:float=1.0, ):
+        if filename in self.__sound_playing_list:
+            print("already plyaying.., Now stopping the sound")
+            self.__resource_sound[filename].stop()
+            index = self.__sound_playing_list.index(filename)
+            self.__sound_playing_list.pop(index)
+
         if filename in self.__resource_sound.keys():
-            if filename in self.__sound_playing_list:
-                print("already plyaying.., Now stopping the sound")
-                self.__resource_sound[filename].stop()
-            else:
-                self.__sound_playing_list.append(filename)
-                self.__resource_sound[filename].set_volume(volume)
-                self.__resource_sound[filename].play()
+            self.__sound_playing_list.append(filename)
+            self.__resource_sound[filename].set_volume(volume)
+            self.__resource_sound[filename].play()
             # row_index = self.resource_model.findItems(filename, Qt.MatchFlag.MatchExactly, 0)[0].row()
 
     def on_dbclick_sound_select(self):

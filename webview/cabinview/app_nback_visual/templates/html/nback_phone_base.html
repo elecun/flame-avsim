@@ -64,14 +64,14 @@
 
                 switch(message.destinationName){
                   // change location
-                  case "flame/avsim/cabinview/mapi_set_url":
+                  case "flame/avsim/phoneview/mapi_set_url":
                     if(payload.hasOwnProperty("url")){
                         window.location.href = "http://{{system.host}}:{{system.port}}"+payload.url;
                     }
                     break;
 
                   // present visual stimulus (show nback code)
-                  case "flame/avsim/cabinview/mapi_nback_code":
+                  case "flame/avsim/phoneview/mapi_nback_code":
                     if(payload.hasOwnProperty("code")){
                       document.getElementById("nback_code").innerText = payload.code;
                       emit_nback_timestamp('flame/avsim/cabinview/nback/log', payload.code+' code present');
@@ -94,7 +94,7 @@
           var options = {
               onSuccess: function () {
                   console.log("Connected to MQTT broker");
-                  mqtt_client.subscribe("flame/avsim/cabinview/#");
+                  mqtt_client.subscribe("flame/avsim/phoneview/#");
               },
               onFailure: function (message) {
                   console.log("Connection failed: " + message.errorMessage);
