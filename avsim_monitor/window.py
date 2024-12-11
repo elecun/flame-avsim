@@ -194,18 +194,18 @@ class AppWindow(QMainWindow):
 
     def on_btn_show_wifi_qr(self):
         """ show wifi QR code on center display"""
-        message = {"mapi": "flame/avsim/cabinview/mapi_set_url","message": "{'url':'/wifi'}"}
-        self.mapi_set_url(message)
+        payload = {"url":"/wifi"}
+        self.mapi_set_url(payload)
 
     def on_btn_show_home(self):
         """ show home """
-        message = {"mapi": "flame/avsim/cabinview/mapi_set_url","message": "{'url':'/'}"}
-        self.mapi_set_url(message)
+        payload = {"url":"/"}
+        self.mapi_set_url(payload)
 
     def on_btn_show_nback(self):
         """ show nback """
-        message = {"mapi": "flame/avsim/cabinview/mapi_set_url","message": "{'url':'/app/nback/visual'}"}
-        self.mapi_set_url(message)
+        payload = {"url":"/app/nback/visual"}
+        self.mapi_set_url(payload)
 
     
     def on_load_scenario_full(self):

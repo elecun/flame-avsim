@@ -51,7 +51,7 @@
     ]},
     {"time":155.0,"event":[
       { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'자율주행 모드 시뮬레이션을 실행합니다.'}"},
-      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'command':'python ../PythonAPI/examples/automatic_control.py --res=2560x960 --pos=3840,0 -l'}"}
+      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'command':'python ../PythonAPI/examples/automatic_control.py --res 2560x960 --pos 3840,0 -l'}"}
     ]},
     {"time":161.0,"event":[
       { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':''}"},
@@ -59,7 +59,7 @@
       { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.7}"}
     ]},
     {"time":251.0,"event":[
-      { "mapi": "flame/avsim/carla/process/mapi_terminate",  "message": "{'command':'python ../PythonAPI/examples/automatic_control.py --res=2560x960 --pos=3840,0 -l'}"},
+      { "mapi": "flame/avsim/carla/process/mapi_terminate",  "message": "{'command':'python ../PythonAPI/examples/automatic_control.py --res 2560x960 --pos 3840,0 -l'}"},
       { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.7}"},
       { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'다음 실험을 시작합니다. 잠시만 기다려주십시오.'}"},
       { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'tesla_autopilot_off.mp3', 'volume':0.7}"}
@@ -72,20 +72,22 @@
     ]},
     {"time":281.0,"event":[
       { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'수동주행 모드 시뮬레이션을 실행합니다. 수동 조작이 가능합니다.'}"},
-      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'command':'python ../PythonAPI/examples/manual_control_steeringwheel.py --res=2560x960 --pos=3840,0'}"}
+      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'command':'python ../PythonAPI/examples/manual_control_steeringwheel.py --res 2560x960 --pos 3840,0'}"}
     ]},
     {"time":286.0,"event":[
       { "mapi": "flame/avsim/cabinview/mapi_set_url",  "message": "{'url':'/'}"},
       { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.7}"}
     ]},
     {"time":376.0,"event":[
-      { "mapi": "flame/avsim/carla/process/terminate",  "message": "{'command':'python ../PythonAPI/examples/manual_control_steeringwheel.py --res=2560x960 --pos=3840,0'}"},
+      { "mapi": "flame/avsim/carla/process/mapi_terminate",  "message": "{'command':'python ../PythonAPI/examples/manual_control_steeringwheel.py --res 2560x960 --pos 3840,0'}"},
       { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'file':'interior_ambience_10min.mp3', 'volume':0.7}"},
       { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'다음 실험을 시작합니다. 잠시만 기다려주십시오...'}"}
     ]},
+    {"time":402.0,"event":[
+      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'command':'python ../PythonAPI/scenario_runner/manual_control.py --res 2560x960 --pos 3840,0 --rolename=ego_vehicle'}"}
+    ]},
     {"time":406.0,"event":[
-      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'자율주행 모드 시뮬레이션이 실행됩니다. 주행 중간에 제시되는 태스크를 수행하십시오.'}"},
-      { "mapi": "flame/avsim/carla/process/mapi_launch",  "message": "{'command':'python ../PythonAPI/scenario_runner/manual_control.py --res=2560x960 --pos=3840,0 --rolename=ego_vehicle'}"}
+      { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'자율주행 모드 시뮬레이션이 실행됩니다. 주행 중간에 제시되는 태스크를 수행하십시오.'}"}
     ]},
     {"time":412.0,"event":[
       { "mapi": "flame/avsim/mixer/mapi_play",  "message": "{'file':'tesla_autopilot_on.mp3', 'volume':0.7}"},
@@ -118,7 +120,7 @@
     {"time":504.8,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'R'}"}]},
     {"time":507.5,"event":[{ "mapi": "flame/avsim/cabinview/mapi_nback_code",  "message": "{'code':'A'}"}]},
     {"time":510.2,"event":[{ "mapi": "flame/avsim/cabinview/mapi_set_url", "message": "{'url':'/'}"}]},
-    {"time":511.0,"event":[{ "mapi": "flame/avsim/carla/process/mapi_launch", "message": "{'command':'python ../PythonAPI/util/config.py -m Town15'}"}]},
+    {"time":511.0,"event":[{ "mapi": "flame/avsim/carla/process/mapi_launch", "message": "{'command':'python ../PythonAPI/util/config.py -m Town11'}"}]},
     {"time":521.0,"event":[{ "mapi": "flame/avsim/carla/process/mapi_launch", "message": "{'command':'python ../PythonAPI/util/config.py --weather MidRainyNight'}"}]},
     {"time":541.0,"event":[
       { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'자율주행 모드 시뮬레이션을 실행합니다.'}"},
@@ -168,7 +170,6 @@
     {"time":676.0,"event": [
       { "mapi": "flame/avsim/cabinview/mapi_show_text",  "message": "{'text':'실험이 종료되었습니다.'}"},
       { "mapi": "flame/avsim/mixer/mapi_stop",  "message": "{'file':'tesla_autopilot_off.mp3', 'volume':0.7}"}
-    ]},
-    {"time":700.0,"event": [{ "mapi": "flame/avsim/cabinview/mapi_set_url", "message": "{'url':'/'}"}]}
+    ]}
   ]
 }

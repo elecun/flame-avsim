@@ -13,8 +13,13 @@
 
       /* 배경을 검정색으로 설정 */
       body {
-          background-color: black;
-          color: white;
+        background-color: black;
+        color: white;
+        overflow: hidden;
+        margin: 0; /* 여백 제거 */
+        padding: 0; /* 여백 제거 */
+        width: 100%; /* 페이지가 화면 크기에 맞게 확장 */
+        height: 100%; /* 페이지가 화면 크기에 맞게 확장 */
       }
 
       /* 화면 중앙에 배치 */
@@ -83,7 +88,11 @@
                   case "flame/avsim/cabinview/mapi_set_url": // show set url
                     console.log(payload);
                     if(payload.hasOwnProperty("url")){
+                        console.log("url exist");
                         window.location.href = "http://{{system.host}}:{{system.port}}"+payload.url;
+                    }
+                    else {
+                        console.log("url not exist");
                     }
                     break;
                   case "flame/avsim/cabinview/mapi_show_text": //show text message
